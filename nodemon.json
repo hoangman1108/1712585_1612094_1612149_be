@@ -1,0 +1,8 @@
+{
+  "exec": "ts-node src/index.ts",
+  "watch": ["src"],
+  "ignore": [
+    "src/routes"
+  ],
+  "ext": "ts"
+}

@@ -1,0 +1,31 @@
+{
+  "entryFile": "src/index.ts",
+  "noImplicitAdditionalProperties": "throw-on-extras",
+  "controllerPathGlobs": ["src/controllers/*.controller.ts"],
+  "spec": {
+    "outputDirectory": "src/routes",
+    "specVersion": 3,
+    "basePath": "/api/v1",
+    "schemes": ["http", "https"],
+    "name": "Data Entry API",
+    "securityDefinitions": {
+      "oauth2": {
+        "type": "apiKey",
+        "name": "authorization",
+        "in": "header",
+        "authorizationUrl": "http://swagger.io/api/oauth/dialog",
+        "flow": "implicit",
+        "scopes": {
+          "write:pets": "modify things",
+          "read:pets": "read things"
+        }
+      }
+    }
+  },
+  "routes": {
+    "basePath": "/api/v1",
+    "middleware": "express",
+    "iocModule": "src/inversify/ioc",
+    "routesDir": "src/routes"
+  }
+}
