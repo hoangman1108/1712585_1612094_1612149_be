@@ -6,6 +6,106 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
+			"ITokenResponse": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"accessToken": {
+						"type": "string"
+					},
+					"refreshToken": {
+						"type": "string"
+					},
+					"userId": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"accessToken",
+					"refreshToken",
+					"userId"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ILoginRequest": {
+				"properties": {
+					"username": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"username",
+					"password"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IUserRequest": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"dob": {
+						"type": "string"
+					},
+					"role": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"mssv": {
+						"type": "string"
+					},
+					"phone": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					},
+					"facebook": {
+						"type": "string"
+					},
+					"google": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name",
+					"dob",
+					"role",
+					"email",
+					"mssv",
+					"password"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IChangePasswordRequest": {
+				"properties": {
+					"userId": {
+						"type": "string"
+					},
+					"oldPassword": {
+						"type": "string"
+					},
+					"newPassword": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"oldPassword",
+					"newPassword"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"IClass": {
 				"properties": {
 					"name": {
@@ -29,6 +129,75 @@
 					"students",
 					"codeJoin"
 				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IUserResponse": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"dob": {
+						"type": "string"
+					},
+					"role": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"mssv": {
+						"type": "string"
+					},
+					"phone": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					},
+					"passwordSalt": {
+						"type": "string"
+					},
+					"facebook": {
+						"type": "string"
+					},
+					"google": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"name",
+					"dob",
+					"role",
+					"email",
+					"mssv",
+					"password"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IUserUpdateRequest": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"dob": {
+						"type": "string"
+					},
+					"role": {
+						"type": "string"
+					},
+					"phone": {
+						"type": "string"
+					}
+				},
 				"type": "object",
 				"additionalProperties": false
 			}
@@ -57,6 +226,122 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
+		"/auth/login": {
+			"post": {
+				"operationId": "Login",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ITokenResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Auth"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ILoginRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/auth/signup": {
+			"post": {
+				"operationId": "Register",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"message"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Auth"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/IUserRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/auth/change-password": {
+			"post": {
+				"operationId": "ChangePassword",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"message"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Auth"
+				],
+				"security": [
+					{
+						"oauth2": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/IChangePasswordRequest"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/classes": {
 			"get": {
 				"operationId": "GetClasses",
@@ -80,6 +365,148 @@
 				],
 				"security": [],
 				"parameters": []
+			}
+		},
+		"/users": {
+			"get": {
+				"operationId": "GetUsers",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/IUserResponse"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"User"
+				],
+				"security": [
+					{
+						"oauth2": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/users/{userId}": {
+			"get": {
+				"operationId": "GetUser",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IUserResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"User"
+				],
+				"security": [
+					{
+						"oauth2": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "userId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/users/{id}": {
+			"put": {
+				"operationId": "UpdateUser",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IUserResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"User"
+				],
+				"security": [
+					{
+						"oauth2": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/IUserUpdateRequest"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "DeleteUser",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IUserResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"User"
+				],
+				"security": [
+					{
+						"oauth2": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
 			}
 		}
 	},
