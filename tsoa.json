@@ -24,6 +24,7 @@
   },
   "routes": {
     "basePath": "/api/v1",
+    "authenticationModule": "src/middlewares/authentication.middleware.ts",
     "middleware": "express",
     "iocModule": "src/inversify/ioc",
     "routesDir": "src/routes"
