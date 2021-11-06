@@ -5,6 +5,8 @@ WORKDIR /app
 
 ADD . ./
 
+COPY .env.example .env
+
 RUN yarn
 
 EXPOSE 4000
