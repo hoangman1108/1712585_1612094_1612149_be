@@ -37,6 +37,7 @@ deploy:
     - chmod 400 key.pem
 
   script:
+    - ssh -o StrictHostKeyChecking=no -i key.pem $USER_NAME@$PROD_SERVER_IP "docker login registry.gitlab.com/hoangman1108/1712585_1612094_1612149_be"
     - ssh -o StrictHostKeyChecking=no -i key.pem $USER_NAME@$PROD_SERVER_IP "export GPG_TTY=$(tty) && docker pull registry.gitlab.com/hoangman1108/1712585_1612094_1612149_be"
     - ssh -o StrictHostKeyChecking=no -i key.pem $USER_NAME@$PROD_SERVER_IP "docker stop 1712585_1612094_1612149_be || true && docker rm 1712585_1612094_1612149_be || true"
     - ssh -o StrictHostKeyChecking=no -i key.pem $USER_NAME@$PROD_SERVER_IP "docker run -p 4000:4000 -d --name 1712585_1612094_1612149_be registry.gitlab.com/hoangman1108/1712585_1612094_1612149_be"
