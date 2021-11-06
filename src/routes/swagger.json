@@ -756,8 +756,81 @@
 				"tags": [
 					"Classes"
 				],
-				"security": [],
+				"security": [
+					{
+						"oauth2": []
+					}
+				],
 				"parameters": []
+			},
+			"post": {
+				"operationId": "CreateClass",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IClass"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Classes"
+				],
+				"security": [
+					{
+						"oauth2": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/IClass"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/classes/{classId}": {
+			"delete": {
+				"operationId": "DeleteClass",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Classes"
+				],
+				"security": [
+					{
+						"oauth2": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "classId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
 			}
 		},
 		"/grades": {
