@@ -1,4 +1,4 @@
-FROM node
+FROM node:14.15.4-alpine
 
 # Create app directory
 WORKDIR /app
@@ -7,5 +7,6 @@ ADD . ./
 
 RUN yarn
 
-EXPOSE 3000
-CMD [ "yarn", "start"]
+EXPOSE 4000
+
+CMD [ "yarn", "dev"]

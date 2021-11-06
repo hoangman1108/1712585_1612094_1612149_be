@@ -8,7 +8,7 @@
   "license": "ISC",
   "scripts": {
     "build": "npx tsc --skipLibCheck",
-    "start": "npx tsc --skipLibCheck && node ./dist/server.js",
+    "start": "npx tsc --skipLibCheck && node ./build/index.js",
     "lint": "eslint --ext .jsx,.ts,.tsx ./src",
     "build:swagger": "mkdir -p src/routes && mkdir -p src/routes && tsoa swagger",
     "build:routes": "mkdir -p src/routes && tsoa routes",
