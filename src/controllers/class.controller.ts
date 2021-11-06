@@ -1,5 +1,5 @@
 import {
-  Tags, Route, Controller, Get,
+  Tags, Route, Controller, Get, Post, Delete, Body, Security,
 } from 'tsoa';
 import { IClass } from '../interfaces/class.interface';
 import { ProvideSingleton, inject } from '../inversify/ioc';
@@ -14,7 +14,20 @@ export class ClassController extends Controller {
   }
 
   @Get()
+  @Security('oauth2')
   async getClasses(): Promise<IClass[]> {
     return this.classService.list();
+  }
+
+  @Post('/')
+  @Security('oauth2')
+  async createClass(@Body() data: IClass): Promise<IClass> {
+    return this.classService.create(data);
+  }
+
+  @Delete('/{classId}')
+  @Security('oauth2')
+  async deleteClass(classId: string): Promise<string> {
+    return this.classService.delete(classId);
   }
 }

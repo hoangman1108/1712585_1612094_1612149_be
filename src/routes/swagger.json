@@ -6,6 +6,82 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
+			"IAssignmentResponse": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"percent": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"classId": {
+						"type": "string"
+					},
+					"teacherId": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"percent",
+					"name",
+					"classId",
+					"teacherId"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IAssignmentCreateRequest": {
+				"properties": {
+					"percent": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"classId": {
+						"type": "string"
+					},
+					"teacherId": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"percent",
+					"name",
+					"classId",
+					"teacherId"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IAssignmentUpdateRequest": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"percent": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"classId": {
+						"type": "string"
+					},
+					"teacherId": {
+						"type": "string"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
 			"ITokenResponse": {
 				"properties": {
 					"id": {
@@ -132,6 +208,149 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"IGradeResponse": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"studentId": {
+						"type": "string"
+					},
+					"assignmentId": {
+						"type": "string"
+					},
+					"score": {
+						"type": "number",
+						"format": "double"
+					},
+					"report": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"studentId",
+					"assignmentId",
+					"score",
+					"report"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IGradeCreateRequest": {
+				"properties": {
+					"studentId": {
+						"type": "string"
+					},
+					"assignmentId": {
+						"type": "string"
+					},
+					"score": {
+						"type": "number",
+						"format": "double"
+					},
+					"report": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"studentId",
+					"assignmentId",
+					"score",
+					"report"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IGradeUpdateRequest": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"studentId": {
+						"type": "string"
+					},
+					"assignmentId": {
+						"type": "string"
+					},
+					"score": {
+						"type": "number",
+						"format": "double"
+					},
+					"report": {
+						"type": "string"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"EnumMail": {
+				"enum": [
+					"basic-content-center",
+					"basic-content-left",
+					"email-confirm",
+					"kyc-approved",
+					"kyc-spending",
+					"kyc-submission",
+					"newsletter",
+					"password-request",
+					"password-reset-success",
+					"wellcome"
+				],
+				"type": "string"
+			},
+			"ISendMail": {
+				"properties": {
+					"subject": {
+						"type": "string"
+					},
+					"title": {
+						"type": "string"
+					},
+					"body": {
+						"type": "string"
+					},
+					"type": {
+						"$ref": "#/components/schemas/EnumMail"
+					}
+				},
+				"required": [
+					"subject",
+					"title",
+					"body",
+					"type"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IMail": {
+				"properties": {
+					"subject": {
+						"type": "string"
+					},
+					"title": {
+						"type": "string"
+					},
+					"body": {
+						"type": "string"
+					},
+					"to": {
+						"type": "string"
+					},
+					"type": {
+						"$ref": "#/components/schemas/EnumMail"
+					}
+				},
+				"required": [
+					"subject",
+					"title",
+					"body",
+					"to",
+					"type"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"IUserResponse": {
 				"properties": {
 					"id": {
@@ -226,6 +445,180 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
+		"/assignments": {
+			"get": {
+				"operationId": "GetAssignments",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/IAssignmentResponse"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Assignments"
+				],
+				"security": [
+					{
+						"oauth2": []
+					}
+				],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "CreateAssignment",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IAssignmentResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Assignments"
+				],
+				"security": [
+					{
+						"oauth2": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/IAssignmentCreateRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/assignments/{id}": {
+			"get": {
+				"operationId": "GetAssignment",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IAssignmentResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Assignments"
+				],
+				"security": [
+					{
+						"oauth2": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "UpdateAssignment",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IAssignmentResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Assignments"
+				],
+				"security": [
+					{
+						"oauth2": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/IAssignmentUpdateRequest"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "DeleteAssignment",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Assignments"
+				],
+				"security": [
+					{
+						"oauth2": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
 		"/auth/login": {
 			"post": {
 				"operationId": "Login",
@@ -365,6 +758,212 @@
 				],
 				"security": [],
 				"parameters": []
+			}
+		},
+		"/grades": {
+			"get": {
+				"operationId": "GetGrades",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/IGradeResponse"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Grades"
+				],
+				"security": [
+					{
+						"oauth2": []
+					}
+				],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "CreateGrade",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IGradeResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Grades"
+				],
+				"security": [
+					{
+						"oauth2": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/IGradeCreateRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/grades/{id}": {
+			"get": {
+				"operationId": "GetGrade",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IGradeResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Grades"
+				],
+				"security": [
+					{
+						"oauth2": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "UpdateGrade",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IGradeResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Grades"
+				],
+				"security": [
+					{
+						"oauth2": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/IGradeUpdateRequest"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "DeleteGrade",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Grades"
+				],
+				"security": [
+					{
+						"oauth2": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/email": {
+			"post": {
+				"operationId": "SendEmail",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ISendMail"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Emails"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/IMail"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/users": {
