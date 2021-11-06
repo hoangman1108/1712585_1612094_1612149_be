@@ -12,7 +12,7 @@ export async function expressAuthentication(
   scopes?: string[],
 ): Promise<any> {
   if (securityName === 'oauth2') {
-    const token = request.body.token || request.query.token || request.headers.authorization;
+    const token = request.body.token || request.query.token || request.headers.authorization || '';
     return authUtils.verifyJWT(token).then(async (result: any) => {
       const itoken = await TokenCollection.findOne({ userId: result.userId });
       if (!itoken) {

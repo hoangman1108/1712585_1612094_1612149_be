@@ -12,7 +12,7 @@ export interface UserAttributes extends Document {
   dob: string;
   role: string;
   email: string;
-  mssv: string;
+  mssv?: string;
   phone?: string;
   password: string;
   passwordSalt?: string;
@@ -56,10 +56,7 @@ export const userSchema = new Schema({
   },
   mssv: {
     type: String,
-    required: true,
-    unique: true,
-    trim: true,
-    lowercase: true,
+    required: false,
   },
   phone: {
     type: String,

@@ -13,7 +13,7 @@ export class ClassController extends Controller {
     super();
   }
 
-  @Get()
+  @Get('/')
   @Security('oauth2')
   async getClasses(): Promise<IClass[]> {
     return this.classService.list();

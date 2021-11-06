@@ -43,9 +43,14 @@ export default class AuthService {
       userId: findUser.id,
     };
 
-    const token: ITokenResponse = await TokenCollection.create(authToken);
+    const token: any = await TokenCollection.create(authToken);
 
-    return token;
+    token.role = findUser.role;
+
+    return {
+      ...token.toJSON(),
+      role: findUser.role,
+    };
   }
 
   async register(data: IUserRequest): Promise<string> {

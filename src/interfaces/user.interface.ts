@@ -3,7 +3,7 @@ export interface IUserRequest {
   dob: string;
   role: string;
   email: string;
-  mssv: string;
+  mssv?: string;
   phone?: string;
   password: string;
   facebook?: string;
@@ -24,7 +24,7 @@ export interface IUserResponse {
   dob: string;
   role: string;
   email: string;
-  mssv: string;
+  mssv?: string;
   phone?: string;
   password: string;
   passwordSalt?: string;
