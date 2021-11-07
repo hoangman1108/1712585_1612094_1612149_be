@@ -21,8 +21,9 @@ export class UserController extends Controller {
 
   @Get('/me')
   @Security('oauth2')
-  async getMe(@Request() request: any): Promise<IUserResponse[]> {
-    return request.user;
+  async getMe(@Request() request: any): Promise<IUserResponse> {
+    const { user: { userId } } = request;
+    return this.userService.get(userId);
   }
 
   @Get('/{userId}')
