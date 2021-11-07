@@ -1,5 +1,5 @@
 import {
-  Tags, Route, Controller, Put, Delete, Body, Get, Security,
+  Tags, Route, Controller, Put, Delete, Body, Get, Security, Request,
 } from 'tsoa';
 import { IUserResponse, IUserUpdateRequest } from '../interfaces/user.interface';
 import { ProvideSingleton, inject } from '../inversify/ioc';
@@ -17,6 +17,12 @@ export class UserController extends Controller {
   @Security('oauth2')
   async getUsers(): Promise<IUserResponse[]> {
     return this.userService.list();
+  }
+
+  @Get('/me')
+  @Security('oauth2')
+  async getMe(@Request() request: any): Promise<IUserResponse[]> {
+    return request.user;
   }
 
   @Get('/{userId}')

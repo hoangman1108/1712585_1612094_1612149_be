@@ -23,7 +23,7 @@ export const classSchema = new Schema({
     default: uuidv4,
   },
   name: { type: String },
-  teacher: { type: [Schema.Types.ObjectId], ref: UserCollection, required: false },
+  teacher: { type: Schema.Types.ObjectId, ref: UserCollection, required: false },
   codeJoin: { type: String },
   students: { type: [Schema.Types.ObjectId], ref: UserCollection },
 }, { timestamps: false, toObject: { virtuals: true }, toJSON: { virtuals: true } });
