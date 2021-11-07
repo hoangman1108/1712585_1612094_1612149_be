@@ -5,7 +5,7 @@ export const registerSchema = Joi.object().keys({
   dob: Joi.string().required(),
   role: Joi.string().valid('student', 'teacher').required(),
   email: Joi.string().email().required(),
-  // mssv: Joi.string().regex(/^\d+$/).required(),
+  mssv: Joi.string().required(),
   phone: Joi.string().min(10).max(12).regex(/^\d+$/),
   password: Joi.string().min(6).max(30).required(),
   facebook: Joi.string(),
