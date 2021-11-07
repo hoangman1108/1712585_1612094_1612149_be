@@ -1134,6 +1134,44 @@
 				]
 			}
 		},
+		"/users/role/{userRole}": {
+			"get": {
+				"operationId": "FindUserByRole",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/IUserResponse"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"User"
+				],
+				"security": [
+					{
+						"oauth2": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "userRole",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
 		"/users/{id}": {
 			"put": {
 				"operationId": "UpdateUser",

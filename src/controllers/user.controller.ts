@@ -31,6 +31,12 @@ export class UserController extends Controller {
     return this.userService.get(userId);
   }
 
+  @Get('/role/{userRole}')
+  @Security('oauth2')
+  async findUserByRole(userRole: string): Promise<IUserResponse[]> {
+    return this.userService.findUserByRole(userRole);
+  }
+
   @Put('/{id}')
   @Security('oauth2')
   async updateUser(id: string, @Body() data: IUserUpdateRequest): Promise<IUserResponse> {

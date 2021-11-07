@@ -19,6 +19,14 @@ export default class UserService {
     return user;
   }
 
+  async findUserByRole(userRole: string): Promise<IUserResponse[]> {
+    const users: IUserResponse[] | null = await UserCollection.find({ role: userRole });
+    if (!users) {
+      throw new ApiError(httpStatus.NOT_FOUND, 'USER_NOT_FOUND');
+    }
+    return users;
+  }
+
   async update(data: IUserUpdateRequest): Promise<IUserResponse> {
     const user: IUserResponse | null = await UserCollection.findByIdAndUpdate(data.id, data);
     if (!user) {
