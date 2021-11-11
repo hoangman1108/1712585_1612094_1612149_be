@@ -24,11 +24,11 @@ export const gradeSchema = new Schema({
     default: uuidv4,
   },
   studentId: {
-    type: Schema.Types.ObjectId,
+    type: String,
     ref: UserCollection,
   },
   assignmentId: {
-    type: Schema.Types.ObjectId,
+    type: String,
     ref: AssignmentCollection,
   },
   score: {

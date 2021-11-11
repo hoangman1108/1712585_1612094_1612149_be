@@ -190,8 +190,11 @@
 					"name": {
 						"type": "string"
 					},
-					"teacher": {
-						"type": "string"
+					"teachers": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
 					},
 					"students": {
 						"items": {
@@ -205,8 +208,23 @@
 				},
 				"required": [
 					"name",
-					"students",
 					"codeJoin"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IClassAddUser": {
+				"properties": {
+					"classId": {
+						"type": "string"
+					},
+					"userId": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"classId",
+					"userId"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -800,6 +818,78 @@
 				}
 			}
 		},
+		"/classes/addStudent": {
+			"post": {
+				"operationId": "AddStudent",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IClass"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Classes"
+				],
+				"security": [
+					{
+						"oauth2": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/IClassAddUser"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/classes/addTeacher": {
+			"post": {
+				"operationId": "AddTeacher",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IClass"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Classes"
+				],
+				"security": [
+					{
+						"oauth2": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/IClassAddUser"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/classes/{classId}": {
 			"delete": {
 				"operationId": "DeleteClass",
@@ -1079,10 +1169,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/IUserResponse"
-									},
-									"type": "array"
+									"$ref": "#/components/schemas/IUserResponse"
 								}
 							}
 						}

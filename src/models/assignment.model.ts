@@ -29,11 +29,11 @@ export const assignmentSchema = new Schema({
     type: String,
   },
   classId: {
-    type: Schema.Types.ObjectId,
+    type: String,
     ref: 'Class',
   },
   teacherId: {
-    type: Schema.Types.ObjectId,
+    type: String,
     ref: UserCollection,
   },
 }, { timestamps: false, toObject: { virtuals: true }, toJSON: { virtuals: true } });

@@ -108,9 +108,18 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "name": {"dataType":"string","required":true},
-            "teacher": {"dataType":"string"},
-            "students": {"dataType":"array","array":{"dataType":"string"},"required":true},
+            "teachers": {"dataType":"array","array":{"dataType":"string"}},
+            "students": {"dataType":"array","array":{"dataType":"string"}},
             "codeJoin": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "IClassAddUser": {
+        "dataType": "refObject",
+        "properties": {
+            "classId": {"dataType":"string","required":true},
+            "userId": {"dataType":"string","required":true},
         },
         "additionalProperties": false,
     },
@@ -494,6 +503,64 @@ export function RegisterRoutes(app: express.Router) {
 
 
             const promise = controller.createClass.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/api/v1/classes/addStudent',
+            authenticateMiddleware([{"oauth2":[]}]),
+            function (request: any, response: any, next: any) {
+            const args = {
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
+                    data: {"in":"body","name":"data","required":true,"ref":"IClassAddUser"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const container: IocContainer = typeof iocContainer === 'function' ? (iocContainer as IocContainerFactory)(request) : iocContainer;
+
+            const controller: any = container.get<ClassController>(ClassController);
+            if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+            }
+
+
+            const promise = controller.addStudent.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/api/v1/classes/addTeacher',
+            authenticateMiddleware([{"oauth2":[]}]),
+            function (request: any, response: any, next: any) {
+            const args = {
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
+                    data: {"in":"body","name":"data","required":true,"ref":"IClassAddUser"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const container: IocContainer = typeof iocContainer === 'function' ? (iocContainer as IocContainerFactory)(request) : iocContainer;
+
+            const controller: any = container.get<ClassController>(ClassController);
+            if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+            }
+
+
+            const promise = controller.addTeacher.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

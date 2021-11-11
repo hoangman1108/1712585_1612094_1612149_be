@@ -23,7 +23,7 @@ export interface UserAttributes extends Document {
 
 interface IUserModel extends Model<UserAttributes> {
   paginate: any;
-  isEmailTaken: (email: string, excludeUserId?: Schema.Types.ObjectId) => Promise<boolean>;
+  isEmailTaken: (email: string, excludeUserId?: String) => Promise<boolean>;
 }
 
 type ComparePasswordFunction = (this: UserAttributes, candidatePassword: string, cb?: (err: Error, isMatch: boolean) => {}) => boolean;
@@ -100,7 +100,7 @@ userSchema.pre('save', async function (next) {
 });
 
 // check email exists
-userSchema.statics.isEmailTaken = async function (email: string, excludeUserId?: Schema.Types.ObjectId): Promise<boolean> {
+userSchema.statics.isEmailTaken = async function (email: string, excludeUserId?: String): Promise<boolean> {
   let condition: any = {
     email,
   };
@@ -115,7 +115,7 @@ userSchema.statics.isEmailTaken = async function (email: string, excludeUserId?:
 };
 
 // check mssv exists
-userSchema.statics.isMssvTaken = async function (mssv: string, excludeUserId?: Schema.Types.ObjectId): Promise<boolean> {
+userSchema.statics.isMssvTaken = async function (mssv: string, excludeUserId?: String): Promise<boolean> {
   let condition: any = {
     mssv,
   };

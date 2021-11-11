@@ -8,8 +8,8 @@ import { UserCollection } from './user.model';
 interface ClassAttributes extends Document {
   id: string;
   name: string;
-  teacher?: string;
-  students: string[];
+  teachers?: string[];
+  students?: string[];
   codeJoin: string;
 }
 
@@ -23,9 +23,9 @@ export const classSchema = new Schema({
     default: uuidv4,
   },
   name: { type: String },
-  teacher: { type: Schema.Types.ObjectId, ref: UserCollection, required: false },
+  teachers: [{ type: String, ref: UserCollection, required: false }],
   codeJoin: { type: String },
-  students: { type: [Schema.Types.ObjectId], ref: UserCollection },
+  students: [{ type: String, ref: UserCollection, required: false }],
 }, { timestamps: false, toObject: { virtuals: true }, toJSON: { virtuals: true } });
 
 classSchema.plugin(toJSON);
