@@ -7,6 +7,7 @@ import logger from './app/logger';
 import database from './app/database';
 import utils from './app/utils';
 import events from './app/eventEmitter';
+import { ConnectMailer } from './helpers/email.connect';
 
 class Server {
   private App: express.Application;
@@ -19,6 +20,7 @@ class Server {
     new database();
     this.tsoa = new Tsoa();
     this.Middleware();
+    ConnectMailer();
   }
 
   Middleware() {
