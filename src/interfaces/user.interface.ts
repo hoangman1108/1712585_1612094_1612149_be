@@ -1,6 +1,6 @@
 export interface IUserRequest {
   name: string;
-  dob: string;
+  dob?: string;
   role: string;
   email: string;
   mssv?: string;
@@ -21,7 +21,7 @@ export interface IUserUpdateRequest {
 export interface IUserResponse {
   id: string;
   name: string;
-  dob: string;
+  dob?: string;
   role: string;
   email: string;
   mssv?: string;

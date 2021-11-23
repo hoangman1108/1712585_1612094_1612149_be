@@ -82,7 +82,7 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "name": {"dataType":"string","required":true},
-            "dob": {"dataType":"string","required":true},
+            "dob": {"dataType":"string"},
             "role": {"dataType":"string","required":true},
             "email": {"dataType":"string","required":true},
             "mssv": {"dataType":"string"},
@@ -192,7 +192,7 @@ const models: TsoaRoute.Models = {
         "properties": {
             "id": {"dataType":"string","required":true},
             "name": {"dataType":"string","required":true},
-            "dob": {"dataType":"string","required":true},
+            "dob": {"dataType":"string"},
             "role": {"dataType":"string","required":true},
             "email": {"dataType":"string","required":true},
             "mssv": {"dataType":"string"},

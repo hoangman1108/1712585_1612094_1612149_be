@@ -9,7 +9,7 @@ import { toJSON } from './plugins/toJSON';
 export interface UserAttributes extends Document {
   id: string;
   name: string;
-  dob: string;
+  dob?: string;
   role: string;
   email: string;
   mssv?: string;
@@ -39,7 +39,7 @@ export const userSchema = new Schema({
   },
   dob: {
     type: String,
-    required: true,
+    required: false,
   },
   role: {
     type: String,

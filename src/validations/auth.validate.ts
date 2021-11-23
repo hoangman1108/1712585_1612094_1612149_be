@@ -2,7 +2,7 @@ import Joi from 'joi';
 
 export const registerSchema = Joi.object().keys({
   name: Joi.string().min(1).max(50).required(),
-  dob: Joi.string().required(),
+  dob: Joi.string(),
   role: Joi.string().valid('student', 'teacher').required(),
   email: Joi.string().email().required(),
   mssv: Joi.string(),

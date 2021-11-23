@@ -158,7 +158,6 @@
 				},
 				"required": [
 					"name",
-					"dob",
 					"role",
 					"email",
 					"password"
@@ -411,7 +410,6 @@
 				"required": [
 					"id",
 					"name",
-					"dob",
 					"role",
 					"email",
 					"password"
