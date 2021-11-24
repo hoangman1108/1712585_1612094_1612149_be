@@ -54,8 +54,6 @@ center(style='width: 100%; background-color: #f5f6fa;')
           tbody
             tr
               td(style='text-align: center; padding-bottom:25px')
-                a(href='#')
-                  img(style='height: 40px' src='images/logo-dark2x.png' alt='logo')
                 p(style='font-size: 20px; color: #6576ff; padding-top: 12px;') SPA GradeBook
         table(style='width:100%;max-width:620px;margin:0 auto;background-color:#ffffff;')
           tbody
@@ -66,17 +64,17 @@ center(style='width: 100%; background-color: #f5f6fa;')
               td(style='padding: 0 30px 20px')
                 p(style='margin-bottom: 10px;')
                   | #{data.info.teacherName} (
-                  a(href='#') #{data.to}
-                  | ) &dstrok;&atilde; m&#x1EDD;i b&#x1EA1;n tham gia l&#x1EDB;p h&#x1ECD;c 
+                  a(href='#') #{data.info.teacherEmail}
+                  | ) đã m&#x1EDD;i b&#x1EA1;n tham gia l&#x1EDB;p h&#x1ECD;c 
                   strong #{data.info.className}
                   | .
-                p(style='margin-bottom: 10px;') GI&Aacute;O VI&Ecirc;N: #{data.info.teacherName}
-                a(href='#' style='background-color:#6576ff;border-radius:4px;color:#ffffff;display:inline-block;font-size:13px;font-weight:600;line-height:44px;text-align:center;text-decoration:none;text-transform: uppercase; padding: 0 30px') Join
+                p(style='margin-bottom: 10px;') Giáo viên: #{data.info.teacherName}
+                a(href='#{data.info.url}' style='cursor:pointer;background-color:#6576ff;border-radius:4px;color:#ffffff;display:inline-block;font-size:13px;font-weight:600;line-height:44px;text-align:center;text-decoration:none;text-transform: uppercase; padding: 0 30px;') Tham gia
             tr
               td(style='padding: 0 30px')
                 p(style='margin-bottom: 10px;')
-                  | N&#x1EBF;u b&#x1EA1;n ch&#x1EA5;p nh&#x1EAD;n, th&ocirc;ng tin li&ecirc;n h&#x1EC7; c&#x1EE7;a b&#x1EA1;n s&#x1EBD; &dstrok;&#x1B0;&#x1EE3;c chia s&#x1EBB; v&#x1EDB;i c&aacute;c th&agrave;nh vi&ecirc;n c&#x1EE7;a l&#x1EDB;p h&#x1ECD;c v&agrave; nh&#x1EEF;ng &#x1EE9;ng d&#x1EE5;ng m&agrave; h&#x1ECD; cho ph&eacute;p s&#x1EED; d&#x1EE5;ng L&#x1EDB;p h&#x1ECD;c.
+                  | Nếu bạn chấp nhận, thông tin liên hệ của bạn sẽ được chia sẻ với các thành viên của lớp học và những ứng dụng mà họ cho phép sử dụng Lớp học.
             tr
               td(style='padding: 20px 30px 40px')
                 p
-                  | Chi&#x309; chuy&ecirc;&#x309;n ti&ecirc;&#x301;p &dstrok;&ecirc;&#x301;n nh&#x1B0;&#x303;ng ng&#x1B0;&#x1A1;&#x300;i ba&#x323;n tin t&#x1B0;&#x1A1;&#x309;ng. B&acirc;&#x301;t c&#x1B0;&#x301; ai co&#x301; email na&#x300;y &dstrok;&ecirc;&#x300;u co&#x301; th&ecirc;&#x309; ch&acirc;&#x301;p nh&acirc;&#x323;n l&#x1A1;&#x300;i m&#x1A1;&#x300;i.
+                  | Chỉ chuyển tiếp đến những người bạn tin tưởng. Bất cứ ai có email này đều có thể chấp nhận lời mời.

@@ -315,7 +315,8 @@
 					"newsletter",
 					"password-request",
 					"password-reset-success",
-					"wellcome"
+					"wellcome",
+					"invite-join-class"
 				],
 				"type": "string"
 			},
@@ -332,13 +333,17 @@
 					},
 					"type": {
 						"$ref": "#/components/schemas/EnumMail"
+					},
+					"info": {
+						"type": "string"
 					}
 				},
 				"required": [
 					"subject",
 					"title",
 					"body",
-					"type"
+					"type",
+					"info"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -359,6 +364,9 @@
 					},
 					"type": {
 						"$ref": "#/components/schemas/EnumMail"
+					},
+					"info": {
+						"type": "string"
 					}
 				},
 				"required": [
@@ -366,7 +374,8 @@
 					"title",
 					"body",
 					"to",
-					"type"
+					"type",
+					"info"
 				],
 				"type": "object",
 				"additionalProperties": false

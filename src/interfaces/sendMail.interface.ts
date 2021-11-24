@@ -3,6 +3,7 @@ export interface ISendMail {
   title: string;
   body: string;
   type: EnumMail;
+  info: string;
 }
 
 export interface IMail {
@@ -11,6 +12,7 @@ export interface IMail {
   body: string;
   to: string;
   type: EnumMail;
+  info: string;
 }
 
 enum EnumMail {
@@ -24,4 +26,5 @@ enum EnumMail {
   PasswordRequest = 'password-request',
   PasswordResetSuccess = 'password-reset-success',
   Wellcome = 'wellcome',
+  InviteJoinClass = 'invite-join-class'
 }
