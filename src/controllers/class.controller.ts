@@ -25,6 +25,12 @@ export class ClassController extends Controller {
     return this.classService.detailFullFill(classId);
   }
 
+  @Get('/{classId}/checkUser')
+  @Security('oauth2')
+  async checkUserInClass(@Request() request: any, classId: string): Promise<boolean> {
+    return this.classService.checkUserInClass(classId, request.user.userId);
+  }
+
   @Post('/')
   @Security('oauth2')
   async createClass(@Request() request: any, @Body() data: IClass): Promise<IClass> {

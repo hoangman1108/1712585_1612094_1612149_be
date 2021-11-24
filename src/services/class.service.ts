@@ -78,6 +78,26 @@ export default class ClassService {
     return findClass.toObject();
   }
 
+  async checkUserInClass(classId: string, userId: string): Promise<boolean> {
+    const { teachers }: any = await ClassCollection.findOne({ _id: classId })
+      .populate({
+        path: 'teachers',
+        match: {
+          _id: userId,
+        },
+      });
+
+    const { students }: any = await ClassCollection.findOne({ _id: classId })
+      .populate({
+        path: 'students',
+        match: {
+          _id: userId,
+        },
+      });
+
+    return teachers.length > 0 || students.length > 0;
+  }
+
   async delete(id: string): Promise<string> {
     const deleted = await ClassCollection.deleteOne({ _id: id });
     if (deleted.ok && deleted.n) {
