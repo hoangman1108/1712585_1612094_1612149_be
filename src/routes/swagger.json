@@ -825,6 +825,74 @@
 				}
 			}
 		},
+		"/classes/{classId}": {
+			"get": {
+				"operationId": "GetDetailClass",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IClass"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Classes"
+				],
+				"security": [
+					{
+						"oauth2": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "classId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"delete": {
+				"operationId": "DeleteClass",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Classes"
+				],
+				"security": [
+					{
+						"oauth2": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "classId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
 		"/classes/addStudent": {
 			"post": {
 				"operationId": "AddStudent",
@@ -895,41 +963,6 @@
 						}
 					}
 				}
-			}
-		},
-		"/classes/{classId}": {
-			"delete": {
-				"operationId": "DeleteClass",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "string"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Classes"
-				],
-				"security": [
-					{
-						"oauth2": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "classId",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
 			}
 		},
 		"/classes/joinClass": {

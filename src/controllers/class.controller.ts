@@ -19,6 +19,12 @@ export class ClassController extends Controller {
     return this.classService.list();
   }
 
+  @Get('/{classId}')
+  @Security('oauth2')
+  async getDetailClass(classId: string): Promise<IClass> {
+    return this.classService.detailFullFill(classId);
+  }
+
   @Post('/')
   @Security('oauth2')
   async createClass(@Request() request: any, @Body() data: IClass): Promise<IClass> {
