@@ -86,4 +86,17 @@ export default class ClassService {
 
     throw new ApiError(httpStatus.BAD_REQUEST, 'DELETE_CLASS_FAIL');
   }
+
+  async joinClass(data: IClassAddUser): Promise<IClass> {
+    const findStudent = await UserCollection.findById(data.userId).lean();
+    if (!findStudent) {
+      throw new ApiError(httpStatus.NOT_FOUND, 'STUDENT_NOT_FOUND');
+    }
+
+    if (findStudent.role === "teacher") {
+      return await this.addTeacher(data);
+    } else {
+      return await this.addStudent(data);
+    }
+  }
 }

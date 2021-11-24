@@ -42,4 +42,10 @@ export class ClassController extends Controller {
   async deleteClass(classId: string): Promise<string> {
     return this.classService.delete(classId);
   }
+
+  @Post('/joinClass')
+  @Security('oauth2')
+  async joinClass(@Request() request: any, @Body() data: IClassAddUser): Promise<IClass> {
+    return this.classService.joinClass(data);
+  }
 }
