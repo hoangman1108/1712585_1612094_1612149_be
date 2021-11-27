@@ -15,10 +15,16 @@ export default class AssignmentService {
     if (data.classId) {
       find.classId = data.classId;
     }
-    if (data.name) {
-      find.name = data.name;
+    if (data.classId && !data.name) {
+      const assignments = await AssignmentCollection.find(find);
+      return assignments;
     }
-    const assignments = await AssignmentCollection.find(find);
+    const assignments = await AssignmentCollection.find({
+      ...find,
+      $text: {
+        $search: data.name,
+      },
+    });
     return assignments;
   }
 

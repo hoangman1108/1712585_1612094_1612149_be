@@ -40,4 +40,6 @@ export const assignmentSchema = new Schema({
 
 assignmentSchema.plugin(toJSON);
 
+assignmentSchema.index({ name: 'text' });
+
 export const AssignmentCollection = model<AssignmentAttributes, IAssignmentModel>('Assignments', assignmentSchema);

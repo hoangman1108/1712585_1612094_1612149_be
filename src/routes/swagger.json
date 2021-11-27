@@ -577,7 +577,9 @@
 						}
 					}
 				]
-			},
+			}
+		},
+		"/assignments/{assignmentId}": {
 			"put": {
 				"operationId": "UpdateAssignment",
 				"responses": {
@@ -603,7 +605,7 @@
 				"parameters": [
 					{
 						"in": "path",
-						"name": "id",
+						"name": "assignmentId",
 						"required": true,
 						"schema": {
 							"type": "string"
@@ -620,9 +622,7 @@
 						}
 					}
 				}
-			}
-		},
-		"/assignments/{assignmentId}": {
+			},
 			"delete": {
 				"operationId": "DeleteAssignment",
 				"responses": {
