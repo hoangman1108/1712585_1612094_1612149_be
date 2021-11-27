@@ -1,7 +1,7 @@
 import {
-  Body, Controller, Delete, Get, Post, Put, Route, Tags, Security,
+  Body, Controller, Delete, Get, Post, Put, Route, Tags, Security, Request,
 } from 'tsoa';
-import { IAssignmentCreateRequest, IAssignmentResponse, IAssignmentUpdateRequest } from '../interfaces/assignment.interface';
+import { IAssignmentCreateRequest, IAssignmentResponse, IAssignmentUpdateRequest, IFindAssignmentRequest } from '../interfaces/assignment.interface';
 import { ProvideSingleton, inject } from '../inversify/ioc';
 import AssignmentService from '../services/assignment.service';
 
@@ -15,8 +15,8 @@ export class AssignmentController extends Controller {
 
   @Get()
   @Security('oauth2')
-  public async getAssignments(): Promise<IAssignmentResponse[]> {
-    return this.assignmentService.list();
+  public async getAssignments(data: IFindAssignmentRequest): Promise<IAssignmentResponse[]> {
+    return this.assignmentService.list(data);
   }
 
   @Get('/{id}')
@@ -27,14 +27,17 @@ export class AssignmentController extends Controller {
 
   @Post('/')
   @Security('oauth2')
-  public async createAssignment(@Body() data: IAssignmentCreateRequest): Promise<IAssignmentResponse> {
-    return this.assignmentService.create(data);
+  public async createAssignment(@Request() request: any, @Body() data: IAssignmentCreateRequest): Promise<IAssignmentResponse> {
+    return this.assignmentService.create({
+      ...data,
+      teacherId: request.user.userId,
+    });
   }
 
   @Put('/{id}')
   @Security('oauth2')
-  public async updateAssignment(id: string, @Body() data: IAssignmentUpdateRequest): Promise<IAssignmentResponse> {
-    return this.assignmentService.update({ ...data, id });
+  public async updateAssignment(@Request() request: any, id: string, @Body() data: IAssignmentUpdateRequest): Promise<IAssignmentResponse> {
+    return this.assignmentService.update({ ...data, id, teacherId: request.user.userId });
   }
 
   @Delete('/{id}')

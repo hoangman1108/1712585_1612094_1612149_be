@@ -37,7 +37,7 @@ class Server {
   Start() {
     this.tsoa.Init(this.App);
     events.on('CONNECT_MONGO_SUCCESS', () => {
-      this.App.listen(utils.AppPort, () => {
+      this.App.listen(process.env.PORT || 4000, () => {
         logger.info(`Api is now running on  ${utils.AppHost}:${utils.AppPort}/api/v1`);
         logger.info(`Docs is now running on ${utils.AppHost}:${utils.AppPort}/v1/docs`);
       });

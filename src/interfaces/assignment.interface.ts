@@ -1,5 +1,16 @@
 export interface IAssignmentCreateRequest {
-  percent: number;
+  score: number;
+  name: string;
+  classId: string;
+}
+
+export interface IFindAssignmentRequest {
+  classId?: string;
+  name?: string;
+}
+
+export interface IAssignmentCreateServiceRequest {
+  score: number;
   name: string;
   classId: string;
   teacherId: string;
@@ -7,15 +18,21 @@ export interface IAssignmentCreateRequest {
 
 export interface IAssignmentUpdateRequest {
   id?: string;
-  percent?: number;
+  score?: number;
   name?: string;
   classId?: string;
-  teacherId?: string;
+}
+export interface IAssignmentUpdateServiceRequest {
+  id?: string;
+  score?: number;
+  name?: string;
+  classId?: string;
+  teacherId: string;
 }
 
 export interface IAssignmentResponse {
-  id: string;
-  percent: number;
+  id?: string;
+  score: number;
   name: string;
   classId: string;
   teacherId: string;

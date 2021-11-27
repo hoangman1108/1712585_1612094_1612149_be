@@ -2,13 +2,13 @@ import {
   Schema, Document, model, Model,
 } from 'mongoose';
 import { v4 as uuidv4 } from 'uuid';
+import { ClassCollection } from './class.model';
 import { toJSON } from './plugins/toJSON';
 import { UserCollection } from './user.model';
 
 interface AssignmentAttributes extends Document {
-  id: string;
-  percent: number;
   name: string;
+  score: number;
   classId: string;
   teacherId: string;
 }
@@ -22,7 +22,7 @@ export const assignmentSchema = new Schema({
     type: String,
     default: uuidv4,
   },
-  percent: {
+  score: {
     type: Number,
   },
   name: {
@@ -30,7 +30,7 @@ export const assignmentSchema = new Schema({
   },
   classId: {
     type: String,
-    ref: 'Class',
+    ref: ClassCollection,
   },
   teacherId: {
     type: String,

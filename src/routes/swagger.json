@@ -11,7 +11,7 @@
 					"id": {
 						"type": "string"
 					},
-					"percent": {
+					"score": {
 						"type": "number",
 						"format": "double"
 					},
@@ -26,8 +26,7 @@
 					}
 				},
 				"required": [
-					"id",
-					"percent",
+					"score",
 					"name",
 					"classId",
 					"teacherId"
@@ -37,7 +36,7 @@
 			},
 			"IAssignmentCreateRequest": {
 				"properties": {
-					"percent": {
+					"score": {
 						"type": "number",
 						"format": "double"
 					},
@@ -46,16 +45,12 @@
 					},
 					"classId": {
 						"type": "string"
-					},
-					"teacherId": {
-						"type": "string"
 					}
 				},
 				"required": [
-					"percent",
+					"score",
 					"name",
-					"classId",
-					"teacherId"
+					"classId"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -65,7 +60,7 @@
 					"id": {
 						"type": "string"
 					},
-					"percent": {
+					"score": {
 						"type": "number",
 						"format": "double"
 					},
@@ -73,9 +68,6 @@
 						"type": "string"
 					},
 					"classId": {
-						"type": "string"
-					},
-					"teacherId": {
 						"type": "string"
 					}
 				},

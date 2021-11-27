@@ -25,8 +25,8 @@ const models: TsoaRoute.Models = {
     "IAssignmentResponse": {
         "dataType": "refObject",
         "properties": {
-            "id": {"dataType":"string","required":true},
-            "percent": {"dataType":"double","required":true},
+            "id": {"dataType":"string"},
+            "score": {"dataType":"double","required":true},
             "name": {"dataType":"string","required":true},
             "classId": {"dataType":"string","required":true},
             "teacherId": {"dataType":"string","required":true},
@@ -37,10 +37,9 @@ const models: TsoaRoute.Models = {
     "IAssignmentCreateRequest": {
         "dataType": "refObject",
         "properties": {
-            "percent": {"dataType":"double","required":true},
+            "score": {"dataType":"double","required":true},
             "name": {"dataType":"string","required":true},
             "classId": {"dataType":"string","required":true},
-            "teacherId": {"dataType":"string","required":true},
         },
         "additionalProperties": false,
     },
@@ -49,10 +48,9 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"string"},
-            "percent": {"dataType":"double"},
+            "score": {"dataType":"double"},
             "name": {"dataType":"string"},
             "classId": {"dataType":"string"},
-            "teacherId": {"dataType":"string"},
         },
         "additionalProperties": false,
     },
@@ -288,6 +286,7 @@ export function RegisterRoutes(app: express.Router) {
             authenticateMiddleware([{"oauth2":[]}]),
             function (request: any, response: any, next: any) {
             const args = {
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
                     data: {"in":"body","name":"data","required":true,"ref":"IAssignmentCreateRequest"},
             };
 
@@ -316,6 +315,7 @@ export function RegisterRoutes(app: express.Router) {
             authenticateMiddleware([{"oauth2":[]}]),
             function (request: any, response: any, next: any) {
             const args = {
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
                     id: {"in":"path","name":"id","required":true,"dataType":"string"},
                     data: {"in":"body","name":"data","required":true,"ref":"IAssignmentUpdateRequest"},
             };
