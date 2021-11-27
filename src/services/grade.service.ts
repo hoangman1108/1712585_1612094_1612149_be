@@ -26,7 +26,7 @@ export default class GradeService {
   }
 
   async update(data: IGradeUpdateRequest): Promise<IGradeResponse> {
-    const grade: IGradeResponse | null = await GradeCollection.findByIdAndUpdate(data.id, data);
+    const grade: IGradeResponse | null = await GradeCollection.findByIdAndUpdate(data.id, data, { new: true });
 
     if (!grade) {
       throw new ApiError(httpStatus.NOT_FOUND, 'ASSIGNMENT_NOT_FOUND');

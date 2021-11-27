@@ -490,7 +490,24 @@
 						"oauth2": []
 					}
 				],
-				"parameters": []
+				"parameters": [
+					{
+						"in": "query",
+						"name": "name",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "classId",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
 			},
 			"post": {
 				"operationId": "CreateAssignment",
@@ -603,7 +620,9 @@
 						}
 					}
 				}
-			},
+			}
+		},
+		"/assignments/{assignmentId}": {
 			"delete": {
 				"operationId": "DeleteAssignment",
 				"responses": {
@@ -629,7 +648,7 @@
 				"parameters": [
 					{
 						"in": "path",
-						"name": "id",
+						"name": "assignmentId",
 						"required": true,
 						"schema": {
 							"type": "string"

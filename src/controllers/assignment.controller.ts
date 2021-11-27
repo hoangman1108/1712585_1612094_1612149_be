@@ -1,7 +1,9 @@
 import {
-  Body, Controller, Delete, Get, Post, Put, Route, Tags, Security, Request,
+  Body, Controller, Delete, Get, Post, Put, Route, Tags, Security, Request, Query,
 } from 'tsoa';
-import { IAssignmentCreateRequest, IAssignmentResponse, IAssignmentUpdateRequest, IFindAssignmentRequest } from '../interfaces/assignment.interface';
+import {
+  IAssignmentCreateRequest, IAssignmentResponse, IAssignmentUpdateRequest,
+} from '../interfaces/assignment.interface';
 import { ProvideSingleton, inject } from '../inversify/ioc';
 import AssignmentService from '../services/assignment.service';
 
@@ -15,8 +17,13 @@ export class AssignmentController extends Controller {
 
   @Get()
   @Security('oauth2')
-  public async getAssignments(data: IFindAssignmentRequest): Promise<IAssignmentResponse[]> {
-    return this.assignmentService.list(data);
+  public async getAssignments(
+    @Query() name?: string,
+      @Query() classId?: string,
+  ): Promise<IAssignmentResponse[]> {
+    return this.assignmentService.list({
+      name, classId,
+    });
   }
 
   @Get('/{id}')
@@ -34,15 +41,15 @@ export class AssignmentController extends Controller {
     });
   }
 
-  @Put('/{id}')
+  @Put('/{assignmentId}')
   @Security('oauth2')
-  public async updateAssignment(@Request() request: any, id: string, @Body() data: IAssignmentUpdateRequest): Promise<IAssignmentResponse> {
-    return this.assignmentService.update({ ...data, id, teacherId: request.user.userId });
+  public async updateAssignment(@Request() request: any, assignmentId: string, @Body() data: IAssignmentUpdateRequest): Promise<IAssignmentResponse> {
+    return this.assignmentService.update({ ...data, id: assignmentId, teacherId: request.user.userId });
   }
 
-  @Delete('/{id}')
+  @Delete('/{assignmentId}')
   @Security('oauth2')
-  public async deleteAssignment(id: string): Promise<string> {
-    return this.assignmentService.delete(id);
+  public async deleteAssignment(assignmentId: string): Promise<string> {
+    return this.assignmentService.delete(assignmentId);
   }
 }
