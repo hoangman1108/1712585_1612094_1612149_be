@@ -11,20 +11,15 @@ import { ApiError } from '../utils';
 @ProvideSingleton(AssignmentService)
 export default class AssignmentService {
   async list(data: IFindAssignmentRequest): Promise<IAssignmentResponse[]> {
-    const find: any = {};
-    if (data.classId) {
-      find.classId = data.classId;
-    }
-    if (data.classId && !data.name) {
-      const assignments = await AssignmentCollection.find(find);
+    if (data.name) {
+      const assignments = await AssignmentCollection.find({
+        $text: {
+          $search: data.name,
+        },
+      });
       return assignments;
     }
-    const assignments = await AssignmentCollection.find({
-      ...find,
-      $text: {
-        $search: data.name,
-      },
-    });
+    const assignments = await AssignmentCollection.find();
     return assignments;
   }
 
@@ -54,7 +49,10 @@ export default class AssignmentService {
       throw new ApiError(httpStatus.FOUND, 'NAME_ASSIGNMENT_FOUND_IN_CLASS');
     }
 
+    const create: any = { ...data };
+    delete create.classId;
     const assignment = await AssignmentCollection.create(data);
+    await ClassCollection.findByIdAndUpdate(data.classId, { assignments: [...findClass.assignments, assignment.id] }, { new: true });
     return assignment;
   }
 
@@ -73,20 +71,20 @@ export default class AssignmentService {
       throw new ApiError(httpStatus.FORBIDDEN, 'USER_CANNOT_UPDATE_ASSIGNMENT');
     }
 
-    const findClass: any = await ClassCollection.findById(data.classId).populate({
-      path: 'teachers',
-      match: {
-        _id: data.teacherId,
-      },
-    });
+    // const findClass: any = await ClassCollection.findById(data.classId).populate({
+    //   path: 'teachers',
+    //   match: {
+    //     _id: data.teacherId,
+    //   },
+    // });
 
-    if (!findClass) {
-      throw new ApiError(httpStatus.NOT_FOUND, 'CLASS_ID_NOT_FOUND');
-    }
+    // if (!findClass) {
+    //   throw new ApiError(httpStatus.NOT_FOUND, 'CLASS_ID_NOT_FOUND');
+    // }
 
-    if (!findClass.teachers.length) {
-      throw new ApiError(httpStatus.NOT_FOUND, 'TEACHER_NOT_FOUND_IN_CLASS');
-    }
+    // if (!findClass.teachers.length) {
+    //   throw new ApiError(httpStatus.NOT_FOUND, 'TEACHER_NOT_FOUND_IN_CLASS');
+    // }
     const assignment: IAssignmentResponse | null = await AssignmentCollection.findByIdAndUpdate(data.id, data, { new: true });
     if (!assignment) {
       throw new ApiError(httpStatus.NOT_FOUND, 'ASSIGNMENT_NOT_FOUND');
@@ -95,11 +93,21 @@ export default class AssignmentService {
   }
 
   async delete(assignmentId: string): Promise<string> {
+    const findInClass = await ClassCollection.find({
+      assignments: { $all: [assignmentId] },
+    });
+    if (!findInClass.length) {
+      throw new ApiError(httpStatus.NOT_FOUND, 'ASSIGNMENT_ID_NOT_FOUND_IN_ANY_COLLECTION_CLASS');
+    }
+    const { assignments, id } = findInClass[0];
+    const find = assignments?.filter((assign) => assign !== assignmentId);
+    await ClassCollection.findByIdAndUpdate(id, { assignments: find }, { new: true });
+
     const deleted = await AssignmentCollection.deleteOne({ _id: assignmentId });
 
     if (deleted.ok && deleted.n) {
       return 'DELETED';
     }
-    throw new ApiError(httpStatus.BAD_REQUEST, 'DELETE_CLASS_FAIL');
+    throw new ApiError(httpStatus.BAD_REQUEST, 'DELETE_ASSIGNMENT_FAIL');
   }
 }

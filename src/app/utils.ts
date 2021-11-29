@@ -23,7 +23,7 @@ const Util = {
     },
     from: process.env.EMAIL_FROM || '',
   },
-  AppPort: process.env.PORT || 3000,
+  AppPort: process.env.PORT || 4000,
   AppHost: process.env.APP_HOST || 'http://localhost',
   env: process.env.NODE_ENV,
 };

@@ -4,12 +4,14 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 import { toJSON } from './plugins/toJSON';
 import { UserCollection } from './user.model';
+import { AssignmentCollection } from './assignment.model';
 
 interface ClassAttributes extends Document {
   id: string;
   name: string;
   teachers?: string[];
   students?: string[];
+  assignments?: string[];
   codeJoin: string;
 }
 
@@ -23,6 +25,7 @@ export const classSchema = new Schema({
     default: uuidv4,
   },
   name: { type: String },
+  assignments: [{ type: String, ref: AssignmentCollection, required: false }],
   teachers: [{ type: String, ref: UserCollection, required: false }],
   codeJoin: { type: String },
   students: [{ type: String, ref: UserCollection, required: false }],

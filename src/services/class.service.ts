@@ -1,4 +1,5 @@
 import httpStatus from 'http-status';
+import { IAssignmentResponse } from '../interfaces/assignment.interface';
 import { IClass, IClassAddUser } from '../interfaces/class.interface';
 import { ProvideSingleton } from '../inversify/ioc';
 import { ClassCollection } from '../models/class.model';
@@ -108,11 +109,28 @@ export default class ClassService {
   }
 
   async detailFullFill(id: string): Promise<IClass> {
-    const data = await ClassCollection.findById(id).populate('students').populate('teachers');
+    const data = await ClassCollection.findById(id).populate('students').populate('teachers').populate('assignments');
     if (!data) {
       throw new ApiError(httpStatus.NOT_FOUND, 'CLASS_ID_NOT_FOUND');
     }
     return data;
+  }
+
+  async getInfoAssignment(id: string): Promise<IAssignmentResponse> {
+    const { assignments }: any = await ClassCollection.findById(id).populate('assignments');
+
+    if (!assignments || !assignments?.length) {
+      throw new ApiError(httpStatus.NOT_FOUND, 'CLASS_ID_NOT_FOUND');
+    }
+    return assignments;
+  }
+
+  async updateAssignments(id: string, data: { assignments: string[] }): Promise<IClass> {
+    const updated = await ClassCollection.findByIdAndUpdate(id, { assignments: data.assignments }, { new: true });
+    if (!updated) {
+      throw new ApiError(httpStatus.NOT_FOUND, 'CLASS_NOT_FOUND');
+    }
+    return updated;
   }
 
   async joinClass(data: IClassAddUser): Promise<IClass> {

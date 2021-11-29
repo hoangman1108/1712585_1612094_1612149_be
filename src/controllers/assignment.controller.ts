@@ -19,10 +19,9 @@ export class AssignmentController extends Controller {
   @Security('oauth2')
   public async getAssignments(
     @Query() name?: string,
-      @Query() classId?: string,
   ): Promise<IAssignmentResponse[]> {
     return this.assignmentService.list({
-      name, classId,
+      name,
     });
   }
 

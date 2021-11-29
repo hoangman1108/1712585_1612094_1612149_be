@@ -1,6 +1,7 @@
 import {
-  Tags, Route, Controller, Get, Post, Delete, Body, Security, Request,
+  Tags, Route, Controller, Get, Post, Delete, Body, Security, Request, Patch,
 } from 'tsoa';
+import { IAssignmentResponse } from '../interfaces/assignment.interface';
 import { IClass, IClassAddUser } from '../interfaces/class.interface';
 import { ProvideSingleton, inject } from '../inversify/ioc';
 import ClassService from '../services/class.service';
@@ -23,6 +24,18 @@ export class ClassController extends Controller {
   @Security('oauth2')
   async getDetailClass(classId: string): Promise<IClass> {
     return this.classService.detailFullFill(classId);
+  }
+
+  @Get('/{classId}/assignments')
+  @Security('oauth2')
+  public async getAssignmentInClass(classId: string): Promise<IAssignmentResponse> {
+    return this.classService.getInfoAssignment(classId);
+  }
+
+  @Patch('/{classId}/assignments')
+  @Security('oauth2')
+  public async updateAssignmentInClass(classId: string, @Body() data: { assignments: string[] }): Promise<IClass> {
+    return this.classService.updateAssignments(classId, data);
   }
 
   @Get('/{classId}/checkUser')

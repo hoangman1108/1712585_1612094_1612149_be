@@ -20,13 +20,12 @@ export interface IAssignmentUpdateRequest {
   id?: string;
   score?: number;
   name?: string;
-  classId?: string;
 }
 export interface IAssignmentUpdateServiceRequest {
   id?: string;
   score?: number;
   name?: string;
-  classId?: string;
+  // classId?: string;
   teacherId: string;
 }
 
@@ -34,6 +33,6 @@ export interface IAssignmentResponse {
   id?: string;
   score: number;
   name: string;
-  classId: string;
+  // classId: string;
   teacherId: string;
 }
