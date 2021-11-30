@@ -4,11 +4,11 @@ require('dotenv').config();
 
 const Util = {
   mongo: {
-    host: process.env.MONGODB_HOST || '',
+    host: process.env.MONGODB_HOST || '34.125.149.179',
     user: process.env.MONGODB_USER || 'root',
     pass: process.env.MONGODB_PASS || 'root',
     port: process.env.MONGODB_PORT || '27017',
-    db: process.env.MONGODB_DB || 'User',
+    db: process.env.MONGODB_DB || 'SPA',
   },
   email: {
     smtp: {
