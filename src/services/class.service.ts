@@ -118,10 +118,6 @@ export default class ClassService {
 
   async getInfoAssignment(id: string): Promise<IAssignmentResponse> {
     const { assignments }: any = await ClassCollection.findById(id).populate('assignments');
-
-    if (!assignments || !assignments?.length) {
-      throw new ApiError(httpStatus.NOT_FOUND, 'CLASS_ID_NOT_FOUND');
-    }
     return assignments;
   }
 
