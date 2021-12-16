@@ -4,8 +4,10 @@ import {
 import express from 'express';
 import multer from 'multer';
 import fs from 'fs';
+import reader from 'xlsx';
 import { ProvideSingleton, inject } from '../inversify/ioc';
 import FileService from '../services/file.service';
+import { StudentCollection } from '../models/student.model';
 
 const { promisify } = require('util');
 const cloudinary = require('cloudinary');
@@ -32,31 +34,59 @@ export class FilesController extends Controller {
     await this.handleFile(request);
     const pathFile = request.file.destination + request.file.originalname;
     fs.renameSync(request.file.path, pathFile);
-    return cloudinary.v2.uploader.upload(
-      pathFile,
-      { resource_type: 'raw' },
-      async (err: any, result: any) => {
-        await unlinkAsync(pathFile);
-        if (err) {
-          throw err;
-        } else {
-          const input: any = {
-            size: result.bytes,
-            path: result.url,
-            type: result.format,
-            name: request.file.originalname,
-            base: request.body.base64Url,
-          };
-          return this.fileService.create(input).then((value) => value);
-        }
-      },
-    );
+    const file = reader.readFile(`uploads/${request.file.originalname}`);
+
+    const sheets = file.SheetNames;
+
+    const data = sheets.map((_, i) => {
+      const temp = reader.utils.sheet_to_json(
+        file.Sheets[file.SheetNames[i]],
+      );
+      return temp;
+    });
+    StudentCollection.create({
+      list: data,
+      classId: request.body.classId,
+      name: request.file.originalname,
+    });
+    await unlinkAsync(pathFile);
+
+    return {
+      message: 'UPLOAD_FILE_STUDENT_SUCCESS',
+    };
+  }
+
+  @Post('writeFile')
+  public async writeFile(
+    @Request() request : any,
+  ): Promise<any> {
+    await this.handleFile(request);
+    const pathFile = request.file.destination + request.file.originalname;
+    fs.renameSync(request.file.path, pathFile);
+    const file = reader.readFile(`uploads/${request.file.originalname}`);
+
+    const sheets = file.SheetNames;
+
+    const data = sheets.map((_, i) => {
+      const temp = reader.utils.sheet_to_json(
+        file.Sheets[file.SheetNames[i]],
+      );
+      return temp;
+    });
+    StudentCollection.create({
+      list: data,
+      classId: request.body.classId,
+      name: request.file.originalname,
+    });
+    await unlinkAsync(pathFile);
+
+    return {
+      message: 'UPLOAD_FILE_STUDENT_SUCCESS',
+    };
   }
 
   private handleFile(request: express.Request): Promise<any> {
     const multerSingle: any = multer({ dest: 'uploads/' }).single('file');
-    // const upload = multer({ dest: 'uploads/' });
-    // upload.single('file'),
     return new Promise((resolve: any, reject) => {
       multerSingle(request, undefined, async (error: any) => {
         if (error) {

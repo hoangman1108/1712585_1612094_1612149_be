@@ -83,9 +83,11 @@
     "uuid": "^8.3.2",
     "webpack": "^5.26.3",
     "webpack-cli": "^4.5.0",
-    "webpack-node-externals": "^2.5.2"
+    "webpack-node-externals": "^2.5.2",
+    "xlsx": "^0.17.4"
   },
   "devDependencies": {
-    "@types/multer": "^1.4.7"
+    "@types/multer": "^1.4.7",
+    "@types/xlsx": "^0.0.36"
   }
 }
