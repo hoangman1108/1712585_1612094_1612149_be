@@ -1121,6 +1121,23 @@
 				}
 			}
 		},
+		"/files/uploadFile": {
+			"post": {
+				"operationId": "UploadFile",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": []
+			}
+		},
 		"/grades": {
 			"get": {
 				"operationId": "GetGrades",
