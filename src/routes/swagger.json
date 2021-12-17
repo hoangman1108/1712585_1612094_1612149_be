@@ -1121,7 +1121,7 @@
 				}
 			}
 		},
-		"/files/uploadFile": {
+		"/files/upload-list-student": {
 			"post": {
 				"operationId": "UploadFile",
 				"responses": {
@@ -1134,8 +1134,40 @@
 						}
 					}
 				},
+				"tags": [
+					"Files"
+				],
 				"security": [],
 				"parameters": []
+			}
+		},
+		"/files/list-student/{classId}": {
+			"get": {
+				"operationId": "ListStudent",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Files"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "classId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
 			}
 		},
 		"/grades": {
