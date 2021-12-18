@@ -1,6 +1,6 @@
 export interface UpdatePointByTeacherRequest {
   classId: string;
-  mssv: string;
+  MSSV: string;
   fullName: string;
   assignmentId: string;
   point: number;

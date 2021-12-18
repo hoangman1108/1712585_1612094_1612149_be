@@ -35,7 +35,6 @@ export class FilesController extends Controller {
     @Request() request : any,
   ): Promise<any> {
     await this.handleFile(request);
-    console.log(request.file);
     const pathFile = request.file.destination + request.file.originalname;
     fs.renameSync(request.file.path, pathFile);
     const file = reader.readFile(`uploads/${request.file.originalname}`);

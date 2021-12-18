@@ -4,7 +4,7 @@ import { ClassCollection } from './class.model';
 
 export type IPointAssingment = mongoose.Document & {
   classId: string;
-  mssv: string;
+  MSSV: string;
   fullName: string;
   assignmentId: string;
   point?: number;
@@ -15,7 +15,7 @@ const pointAssignment = new mongoose.Schema({
     type: String,
     ref: ClassCollection,
   },
-  mssv: {
+  MSSV: {
     type: String,
   },
   fullName: {
