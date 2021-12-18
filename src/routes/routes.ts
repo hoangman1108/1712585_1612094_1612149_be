@@ -15,6 +15,8 @@ import { GradeController } from './../controllers/grade.controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { EmailController } from './../controllers/mail.controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { PointAssignmentController } from './../controllers/pointAssignment.controller';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { UserController } from './../controllers/user.controller';
 import { expressAuthentication } from './../middlewares/authentication.middleware';
 import { iocContainer } from './../inversify/ioc';
@@ -183,6 +185,18 @@ const models: TsoaRoute.Models = {
             "to": {"dataType":"string","required":true},
             "type": {"ref":"EnumMail","required":true},
             "info": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "UpdatePointByTeacherRequest": {
+        "dataType": "refObject",
+        "properties": {
+            "classId": {"dataType":"string","required":true},
+            "mssv": {"dataType":"string","required":true},
+            "fullName": {"dataType":"string","required":true},
+            "assignmentId": {"dataType":"string","required":true},
+            "point": {"dataType":"double","required":true},
         },
         "additionalProperties": false,
     },
@@ -956,6 +970,33 @@ export function RegisterRoutes(app: express.Router) {
 
 
             const promise = controller.SendEmail.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/api/v1/point-assignment/update-by-teacher',
+            function (request: any, response: any, next: any) {
+            const args = {
+                    data: {"in":"body","name":"data","required":true,"ref":"UpdatePointByTeacherRequest"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const container: IocContainer = typeof iocContainer === 'function' ? (iocContainer as IocContainerFactory)(request) : iocContainer;
+
+            const controller: any = container.get<PointAssignmentController>(PointAssignmentController);
+            if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+            }
+
+
+            const promise = controller.updatePointByTeacher.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

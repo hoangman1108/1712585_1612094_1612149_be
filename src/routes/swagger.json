@@ -365,6 +365,35 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"UpdatePointByTeacherRequest": {
+				"properties": {
+					"classId": {
+						"type": "string"
+					},
+					"mssv": {
+						"type": "string"
+					},
+					"fullName": {
+						"type": "string"
+					},
+					"assignmentId": {
+						"type": "string"
+					},
+					"point": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"classId",
+					"mssv",
+					"fullName",
+					"assignmentId",
+					"point"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"IUserResponse": {
 				"properties": {
 					"id": {
@@ -1370,6 +1399,36 @@
 						"application/json": {
 							"schema": {
 								"$ref": "#/components/schemas/IMail"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/point-assignment/update-by-teacher": {
+			"post": {
+				"operationId": "UpdatePointByTeacher",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Point Assingments"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdatePointByTeacherRequest"
 							}
 						}
 					}

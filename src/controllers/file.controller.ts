@@ -48,8 +48,8 @@ export class FilesController extends Controller {
       );
       return temp;
     });
-    StudentCollection.create({
-      list: data,
+    await StudentCollection.create({
+      list: data[0],
       classId: request.body.classId,
       name: request.file.originalname,
     });

@@ -13,6 +13,7 @@
     "build:swagger": "mkdir -p src/routes && mkdir -p src/routes && tsoa swagger",
     "build:routes": "mkdir -p src/routes && tsoa routes",
     "dev": "yarn build:routes && yarn build:swagger && nodemon -w src --ext ts --exec ts-node src/index.ts",
+    "window": "tsoa swagger && tsoa routes && nodemon -w src --ext ts --exec ts-node src/index.ts",
     "dev:watch": "concurrently \"nodemon\" \"nodemon -x tsoa spec-and-routes\"",
     "test": "jest --detectOpenHandles"
   },
