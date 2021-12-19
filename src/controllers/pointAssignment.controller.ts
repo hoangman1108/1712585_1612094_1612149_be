@@ -8,6 +8,7 @@ import reader from 'xlsx';
 import { ProvideSingleton, inject } from '../inversify/ioc';
 import { UpdatePointByTeacherRequest } from '../interfaces/pointAssingment.interface';
 import PointAssignmentService from '../services/pointAssignment.service';
+
 const { promisify } = require('util');
 
 const unlinkAsync = promisify(fs.unlink);

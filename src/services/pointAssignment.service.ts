@@ -43,11 +43,34 @@ export default class PointAssignmentService {
 
   async showFullPointInClass(data: { classId: string }) {
     const { assignments }: any = await ClassCollection.findOne({ _id: data.classId }).populate('assignments').lean();
-    assignments.map(async (assignment: any) => {
+    const response = await Promise.all(assignments.map(async (assignment: any) => {
       const find = await PointAssignmentCollection.find({ assignmentId: assignment._id });
-      console.log('find: ', find);
-      return find;
-    });
-    return assignments;
+      if (find.length) {
+        return {
+          name: assignment.name,
+          point: find.map((value) => ({
+            MSSV: value.MSSV,
+            point: value.point,
+          })),
+        };
+      }
+      return null;
+    }));
+    const { list: students }: any = await StudentCollection.findOne({ classId: data.classId }).lean();
+
+    const dataResponse: any[] = students.map((val: any) => ({
+      ...val, points: [],
+    }));
+    students.map((student: any, index: any) => response?.map((res: any) => {
+      if (!res) {
+        return false;
+      }
+      const point = res.point.find((val: any) => Number(val.MSSV) === Number(student.MSSV));
+      dataResponse[index].points.push(point);
+
+      return true;
+    }));
+
+    return dataResponse;
   }
 }
