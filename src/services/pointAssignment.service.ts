@@ -13,7 +13,7 @@ export default class PointAssignmentService {
     if (!find) {
       const dssv = await StudentCollection.findOne({ classId: data.classId });
       if (!dssv) {
-        throw new ApiError(httpStatus.NOT_FOUND, 'FILE_COLLECTION_NOT_FOUND');
+        throw new ApiError(httpStatus.NOT_FOUND, 'DSSV_NOT_FOUND');
       }
       await Promise.all(dssv.list.map(async (value) => {
         await PointAssignmentCollection.create({
@@ -31,7 +31,7 @@ export default class PointAssignmentService {
     if (update) {
       return 'UPDATED';
     }
-    throw new ApiError(httpStatus.CONFLICT, 'CANNOT UPDATE POiNT');
+    throw new ApiError(httpStatus.CONFLICT, 'CANNOT UPDATE POINT');
   }
 
   async updatePointByFileFromTeacher(data: any) {
