@@ -51,7 +51,9 @@ export class FilesController extends Controller {
       classId: request.body.classId,
     });
     if (find) {
-      throw new ApiError(httpStatus.FOUND, 'FILE_DSSV_IS_EXIST');
+      await StudentCollection.deleteOne({
+        classId: request.body.classId,
+      });
     }
     await StudentCollection.create({
       list: data[0],
