@@ -1,6 +1,7 @@
 import httpStatus from 'http-status';
 import { UpdatePointByTeacherRequest } from '../interfaces/pointAssingment.interface';
 import { ProvideSingleton } from '../inversify/ioc';
+import { AssignmentCollection } from '../models/assignment.model';
 import { ClassCollection } from '../models/class.model';
 import PointAssignmentCollection from '../models/pointAssignment.model';
 import { StudentCollection } from '../models/student.model';
@@ -77,13 +78,30 @@ export default class PointAssignmentService {
 
   async showPointAssignmentInClass(data: { classId: string; assignmentId: string }) {
     const responses = await PointAssignmentCollection.find({ classId: data.classId, assignmentId: data.assignmentId });
+    const assignment: any = await AssignmentCollection.findOne({ _id: data.assignmentId });
     return {
       classId: data.classId,
       assignmentId: data.assignmentId,
+      name: assignment.name,
       points: responses.map((value) => ({
+        fullName: value.fullName,
         MSSV: value.MSSV,
         point: value.point,
       })),
     };
   }
+
+  // async showAllAssignmentPoint(data: { classId: string }) {
+  //   const { assignments }: any = await ClassCollection.findOne({ _id: data.classId }).populate('assignments');
+  //   console.log('assignments: ', assignments);
+  //   const temp = await Promise.all(assignments.map(async (assignment: any) => {
+  //     console.log({ classId: data.classId, assignmentId: assignment.id });
+  //     const res = await PointAssignmentCollection.find({ classId: data.classId, assignmentId: assignment.assignmentId });
+  //     console.log('res: ', res);
+  //     return res;
+  //   }));
+  //   console.log('temp', temp);
+  //   const responses = await PointAssignmentCollection.find({ classId: data.classId });
+  //   return responses;
+  // }
 }
