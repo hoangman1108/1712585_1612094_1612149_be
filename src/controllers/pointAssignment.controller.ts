@@ -37,6 +37,15 @@ export class PointAssignmentController extends Controller {
     return response;
   }
 
+  @Get('show-point-assignment/{classId}/{assignmentId}')
+  public async shoưPointAssignmentInClass(
+    classId: string,
+    assignmentId: string,
+  ): Promise<any> {
+    const response = await this.pointService.showPointAssignmentInClass({ classId, assignmentId });
+    return response;
+  }
+
   @Post('upload-file-point-by-teacher')
   public async uploadPointByTeacher(
     @Request() request: any,

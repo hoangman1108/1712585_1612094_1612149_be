@@ -1464,6 +1464,43 @@
 				]
 			}
 		},
+		"/point-assignment/show-point-assignment/{classId}/{assignmentId}": {
+			"get": {
+				"operationId": "ShoưPointAssignmentInClass",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Point Assingments"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "classId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "assignmentId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
 		"/point-assignment/upload-file-point-by-teacher": {
 			"post": {
 				"operationId": "UploadPointByTeacher",
