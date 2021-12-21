@@ -49,7 +49,7 @@ export default class PointAssignmentService {
         return {
           name: assignment.name,
           point: find.map((value) => ({
-            MSSV: value.MSSV,
+            assignmentId: value.assignmentId,
             point: value.point,
           })),
         };
