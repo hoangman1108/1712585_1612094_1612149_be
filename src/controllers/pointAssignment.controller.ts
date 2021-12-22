@@ -1,5 +1,5 @@
 import {
-  Post, Route, Controller, Body, Tags, Request, Get,
+  Post, Route, Controller, Body, Tags, Request, Get, Security,
 } from 'tsoa';
 import express from 'express';
 import multer from 'multer';
@@ -22,6 +22,7 @@ export class PointAssignmentController extends Controller {
   }
 
   @Post('update-by-teacher')
+  @Security('oauth2')
   public async updatePointByTeacher(
     @Body() data: UpdatePointByTeacherRequest,
   ): Promise<any> {
@@ -30,6 +31,7 @@ export class PointAssignmentController extends Controller {
   }
 
   @Get('show-full-point/{classId}')
+  @Security('oauth2')
   public async showFullPointInClass(
     classId: string,
   ): Promise<any> {
@@ -38,6 +40,7 @@ export class PointAssignmentController extends Controller {
   }
 
   @Get('show-point-assignment/{classId}/{assignmentId}')
+  @Security('oauth2')
   public async shoưPointAssignmentInClass(
     classId: string,
     assignmentId: string,
@@ -55,6 +58,7 @@ export class PointAssignmentController extends Controller {
   // }
 
   @Post('upload-file-point-by-teacher')
+  @Security('oauth2')
   public async uploadPointByTeacher(
     @Request() request: any,
   ): Promise<any> {

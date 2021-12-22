@@ -787,6 +787,88 @@
 				}
 			}
 		},
+		"/assignments-checked/{assignmentId}": {
+			"get": {
+				"operationId": "CheckAssignmentChecked",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Assignments Checked"
+				],
+				"security": [
+					{
+						"oauth2": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "assignmentId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"post": {
+				"operationId": "UpdateChecked",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Assignments Checked"
+				],
+				"security": [
+					{
+						"oauth2": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "assignmentId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"checked": {
+										"type": "boolean"
+									}
+								},
+								"required": [
+									"checked"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/classes": {
 			"get": {
 				"operationId": "GetClasses",
@@ -1166,7 +1248,11 @@
 				"tags": [
 					"Files"
 				],
-				"security": [],
+				"security": [
+					{
+						"oauth2": []
+					}
+				],
 				"parameters": []
 			}
 		},
@@ -1186,7 +1272,11 @@
 				"tags": [
 					"Files"
 				],
-				"security": [],
+				"security": [
+					{
+						"oauth2": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -1421,7 +1511,11 @@
 				"tags": [
 					"Point Assingments"
 				],
-				"security": [],
+				"security": [
+					{
+						"oauth2": []
+					}
+				],
 				"parameters": [],
 				"requestBody": {
 					"required": true,
@@ -1451,7 +1545,11 @@
 				"tags": [
 					"Point Assingments"
 				],
-				"security": [],
+				"security": [
+					{
+						"oauth2": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -1480,7 +1578,11 @@
 				"tags": [
 					"Point Assingments"
 				],
-				"security": [],
+				"security": [
+					{
+						"oauth2": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -1517,7 +1619,11 @@
 				"tags": [
 					"Point Assingments"
 				],
-				"security": [],
+				"security": [
+					{
+						"oauth2": []
+					}
+				],
 				"parameters": []
 			}
 		},
