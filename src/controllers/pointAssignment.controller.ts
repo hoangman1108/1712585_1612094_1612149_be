@@ -75,8 +75,9 @@ export class PointAssignmentController extends Controller {
       );
       return temp;
     });
+
     await this.pointService.updatePointByFileFromTeacher({
-      list: data[0],
+      list: data[0].map((value: any) => ({ MSSV: value.MSSV, fullName: value.FullName, point: value.Point })),
       assignmentId: request.body.assignmentId,
       classId: request.body.classId,
     });

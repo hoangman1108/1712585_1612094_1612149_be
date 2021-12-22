@@ -27,7 +27,7 @@ export default class PointAssignmentService {
         classId: data.classId,
         assignmentId: data.assignmentId,
         MSSV: data.MSSV,
-      }, { point: data.point }, { new: true },
+      }, { point: data.point, fullName: data.fullName }, { new: true },
     );
     if (update) {
       return 'UPDATED';
@@ -37,6 +37,7 @@ export default class PointAssignmentService {
 
   async updatePointByFileFromTeacher(data: any) {
     await Promise.all(data.list.map(async (value: any) => {
+      console.log("value", value);
       const updated = await this.updatePoint({ ...value, classId: data.classId, assignmentId: data.assignmentId });
       return updated;
     }));
@@ -46,7 +47,6 @@ export default class PointAssignmentService {
     const { assignments }: any = await ClassCollection.findOne({ _id: data.classId }).populate('assignments').lean();
     const response = await Promise.all(assignments.map(async (assignment: any) => {
       const find = await PointAssignmentCollection.find({ assignmentId: assignment._id });
-      console.log('find: ', find);
       if (find.length) {
         return {
           name: assignment.name,
