@@ -1248,11 +1248,7 @@
 				"tags": [
 					"Files"
 				],
-				"security": [
-					{
-						"oauth2": []
-					}
-				],
+				"security": [],
 				"parameters": []
 			}
 		},
@@ -1272,11 +1268,7 @@
 				"tags": [
 					"Files"
 				],
-				"security": [
-					{
-						"oauth2": []
-					}
-				],
+				"security": [],
 				"parameters": [
 					{
 						"in": "path",
@@ -1511,11 +1503,7 @@
 				"tags": [
 					"Point Assingments"
 				],
-				"security": [
-					{
-						"oauth2": []
-					}
-				],
+				"security": [],
 				"parameters": [],
 				"requestBody": {
 					"required": true,
@@ -1545,11 +1533,7 @@
 				"tags": [
 					"Point Assingments"
 				],
-				"security": [
-					{
-						"oauth2": []
-					}
-				],
+				"security": [],
 				"parameters": [
 					{
 						"in": "path",
@@ -1578,11 +1562,7 @@
 				"tags": [
 					"Point Assingments"
 				],
-				"security": [
-					{
-						"oauth2": []
-					}
-				],
+				"security": [],
 				"parameters": [
 					{
 						"in": "path",
@@ -1619,11 +1599,7 @@
 				"tags": [
 					"Point Assingments"
 				],
-				"security": [
-					{
-						"oauth2": []
-					}
-				],
+				"security": [],
 				"parameters": []
 			}
 		},

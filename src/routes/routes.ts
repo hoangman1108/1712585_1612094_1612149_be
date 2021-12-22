@@ -814,7 +814,6 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/v1/files/upload-list-student',
-            authenticateMiddleware([{"oauth2":[]}]),
             function (request: any, response: any, next: any) {
             const args = {
                     request: {"in":"request","name":"request","required":true,"dataType":"object"},
@@ -842,7 +841,6 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/v1/files/list-student/:classId',
-            authenticateMiddleware([{"oauth2":[]}]),
             function (request: any, response: any, next: any) {
             const args = {
                     classId: {"in":"path","name":"classId","required":true,"dataType":"string"},
@@ -1037,7 +1035,6 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/v1/point-assignment/update-by-teacher',
-            authenticateMiddleware([{"oauth2":[]}]),
             function (request: any, response: any, next: any) {
             const args = {
                     data: {"in":"body","name":"data","required":true,"ref":"UpdatePointByTeacherRequest"},
@@ -1065,7 +1062,6 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/v1/point-assignment/show-full-point/:classId',
-            authenticateMiddleware([{"oauth2":[]}]),
             function (request: any, response: any, next: any) {
             const args = {
                     classId: {"in":"path","name":"classId","required":true,"dataType":"string"},
@@ -1093,7 +1089,6 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/v1/point-assignment/show-point-assignment/:classId/:assignmentId',
-            authenticateMiddleware([{"oauth2":[]}]),
             function (request: any, response: any, next: any) {
             const args = {
                     classId: {"in":"path","name":"classId","required":true,"dataType":"string"},
@@ -1122,7 +1117,6 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/v1/point-assignment/upload-file-point-by-teacher',
-            authenticateMiddleware([{"oauth2":[]}]),
             function (request: any, response: any, next: any) {
             const args = {
                     request: {"in":"request","name":"request","required":true,"dataType":"object"},

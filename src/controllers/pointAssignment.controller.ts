@@ -22,7 +22,7 @@ export class PointAssignmentController extends Controller {
   }
 
   @Post('update-by-teacher')
-  @Security('oauth2')
+  // @Security('oauth2')
   public async updatePointByTeacher(
     @Body() data: UpdatePointByTeacherRequest,
   ): Promise<any> {
@@ -31,7 +31,7 @@ export class PointAssignmentController extends Controller {
   }
 
   @Get('show-full-point/{classId}')
-  @Security('oauth2')
+  // @Security('oauth2')
   public async showFullPointInClass(
     classId: string,
   ): Promise<any> {
@@ -40,7 +40,7 @@ export class PointAssignmentController extends Controller {
   }
 
   @Get('show-point-assignment/{classId}/{assignmentId}')
-  @Security('oauth2')
+  // @Security('oauth2')
   public async shoưPointAssignmentInClass(
     classId: string,
     assignmentId: string,
@@ -58,7 +58,7 @@ export class PointAssignmentController extends Controller {
   // }
 
   @Post('upload-file-point-by-teacher')
-  @Security('oauth2')
+  // @Security('oauth2')
   public async uploadPointByTeacher(
     @Request() request: any,
   ): Promise<any> {
@@ -77,7 +77,7 @@ export class PointAssignmentController extends Controller {
     });
 
     await this.pointService.updatePointByFileFromTeacher({
-      list: data[0].map((value: any) => ({ MSSV: value.MSSV, fullName: value.FullName, point: value.Point })),
+      list: data[0],
       assignmentId: request.body.assignmentId,
       classId: request.body.classId,
     });

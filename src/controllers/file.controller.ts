@@ -31,7 +31,7 @@ export class FilesController extends Controller {
   }
 
   @Post('upload-list-student')
-  @Security('oauth2')
+  // @Security('oauth2')
   public async uploadFile(
     @Request() request : any,
   ): Promise<any> {
@@ -69,7 +69,7 @@ export class FilesController extends Controller {
   }
 
   @Get('list-student/{classId}')
-  @Security('oauth2')
+  // @Security('oauth2')
   public async listStudent(classId: string): Promise<any> {
     const response = await StudentCollection.findOne({
       classId,

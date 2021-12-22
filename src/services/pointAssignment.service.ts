@@ -35,12 +35,60 @@ export default class PointAssignmentService {
     throw new ApiError(httpStatus.CONFLICT, 'CANNOT UPDATE POINT');
   }
 
+  async updatePoint2(data: UpdatePointByTeacherRequest) {
+    const find = await PointAssignmentCollection.findOne({ classId: data.classId, assignmentId: data.assignmentId, MSSV: data.MSSV }).lean();
+    if (!find) {
+      const dssv = await StudentCollection.findOne({ classId: data.classId });
+      if (!dssv) {
+        throw new ApiError(httpStatus.NOT_FOUND, 'DSSV_NOT_FOUND');
+      }
+      await Promise.all(dssv.list.map(async (value) => {
+        await PointAssignmentCollection.create({
+          ...value, classId: data.classId, assignmentId: data.assignmentId,
+        });
+      }));
+    }
+    const update = await PointAssignmentCollection.findOneAndUpdate(
+      {
+        classId: data.classId,
+        assignmentId: data.assignmentId,
+        MSSV: data.MSSV,
+      }, { point: data.point, fullName: data.fullName }, { new: true },
+    );
+    if (update) {
+      return 'UPDATED';
+    }
+    throw new ApiError(httpStatus.CONFLICT, 'CANNOT UPDATE POINT');
+  }
+
   async updatePointByFileFromTeacher(data: any) {
-    await Promise.all(data.list.map(async (value: any) => {
-      console.log("value", value);
-      const updated = await this.updatePoint({ ...value, classId: data.classId, assignmentId: data.assignmentId });
-      return updated;
-    }));
+    if (!data.list.length) {
+      return 'TABLE NULL';
+    }
+    const find = await PointAssignmentCollection.findOne({
+      MSSV: data.list[0].MSSV,
+      assignmentId: data.assignmentId,
+    });
+    if (!find) {
+      const dataMap = data.list.map((value: any) => ({ ...value, assignmentId: data.assignmentId, classId: data.classId }));
+      await PointAssignmentCollection.insertMany(dataMap);
+      return 'UPLOAD_SUCCESS';
+    }
+    const res = data.list.map((value: any) => PointAssignmentCollection.findOneAndUpdate({
+      MSSV: value.MSSV,
+      assignmentId: data.assignmentId,
+    }, {
+      point: value.point,
+      fullName: value.fullName,
+    }, { new: true }));
+    await Promise.all(res);
+    // await PointAssignmentCollection.updateMany(dataMap);
+    return 'UPLOAD_SUCCESS';
+    // await Promise.all(data.list.map(async (value: any) => {
+    //   const updated = await this.updatePoint({ ...value, classId: data.classId, assignmentId: data.assignmentId });
+    //   return updated;
+    // }));
+    return data;
   }
 
   async showFullPointInClass(data: { classId: string }) {
