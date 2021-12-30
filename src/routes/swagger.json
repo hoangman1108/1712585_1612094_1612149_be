@@ -293,7 +293,7 @@
 				"enum": [
 					"basic-content-center",
 					"basic-content-left",
-					"email-confirm",
+					"active-account",
 					"kyc-approved",
 					"kyc-spending",
 					"kyc-submission",

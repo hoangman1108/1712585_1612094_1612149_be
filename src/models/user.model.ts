@@ -6,6 +6,11 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 import { toJSON } from './plugins/toJSON';
 
+export enum StatusEnum {
+  ACTIVE = 'active',
+  UNACTIVE = 'unactive',
+  LOCKED = 'locked',
+}
 export interface UserAttributes extends Document {
   id: string;
   name: string;
@@ -16,8 +21,10 @@ export interface UserAttributes extends Document {
   phone?: string;
   password: string;
   passwordSalt?: string;
+  count?: number;
   facebook?: string;
   google?: string;
+  status?: StatusEnum;
   comparePassword: ComparePasswordFunction;
 }
 
@@ -36,6 +43,11 @@ export const userSchema = new Schema({
   name: {
     type: String,
     required: true,
+  },
+  count: {
+    type: Number,
+    default: 0,
+    nullable: true,
   },
   dob: {
     type: String,
@@ -63,6 +75,12 @@ export const userSchema = new Schema({
     required: false,
     unique: true,
     trim: true,
+  },
+  status: {
+    type: String,
+    status: [StatusEnum.ACTIVE, StatusEnum.UNACTIVE, StatusEnum.LOCKED],
+    default: StatusEnum.UNACTIVE,
+    nullable: true,
   },
   password: {
     type: String,

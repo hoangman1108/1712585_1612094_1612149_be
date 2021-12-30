@@ -15,10 +15,10 @@ export interface IMail {
   info: string;
 }
 
-enum EnumMail {
+export enum EnumMail {
   BaSicContentCenter = 'basic-content-center',
   BasicContentLeft = 'basic-content-left',
-  EmailConfirm = 'email-confirm',
+  ActiveAccount = 'active-account',
   KycApproved = 'kyc-approved',
   KycSpending = 'kyc-spending',
   KycSubmission = 'kyc-submission',
@@ -26,5 +26,5 @@ enum EnumMail {
   PasswordRequest = 'password-request',
   PasswordResetSuccess = 'password-reset-success',
   Wellcome = 'wellcome',
-  InviteJoinClass = 'invite-join-class'
+  InviteJoinClass = 'invite-join-class',
 }

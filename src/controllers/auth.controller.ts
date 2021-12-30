@@ -1,18 +1,20 @@
 import {
   Body, Controller, Post, Route, Tags, Security, Request,
 } from 'tsoa';
+import { EnumMail } from '../interfaces/sendMail.interface';
 import { IChangePasswordRequest, ILoginRequest, ITokenResponse } from '../interfaces/token.interface';
 import { IUserRequest } from '../interfaces/user.interface';
 import { ProvideSingleton, inject } from '../inversify/ioc';
 import { validateMiddleware } from '../middlewares/validate.middleware';
 import AuthService from '../services/auth.service';
+import EmailService from '../services/email.service';
 import { changePasswordSchema, registerSchema } from '../validations/auth.validate';
 
 @Tags('Auth')
 @Route('/auth')
 @ProvideSingleton(AuthController)
 export class AuthController extends Controller {
-  constructor(@inject(AuthService) private authService: AuthService) {
+  constructor(@inject(AuthService) private authService: AuthService, @inject(EmailService) private emailService: EmailService) {
     super();
   }
 
@@ -25,6 +27,21 @@ export class AuthController extends Controller {
   async register(@Body() data: IUserRequest): Promise<{ message: string }> {
     validateMiddleware(registerSchema, data);
     const message = await this.authService.register(data);
+    // subject: string;
+    // title: string;
+    // body: string;
+    // type: EnumMail;
+    // info: string;
+    await this.emailService.sendEmail(data.email, {
+      subject: 'Xác nhận tài khoản',
+      title: 'Xác nhận tài khoản',
+      body: 'body',
+      type: EnumMail.ActiveAccount,
+      info: JSON.stringify({
+        url: 'http://localhost/confirm-account',
+        name: data.name,
+      }),
+    });
     return { message };
   }
 

@@ -17,8 +17,8 @@ const Util = {
       port: process.env.SMTP_PORT || '465',
       service: process.env.SMTP_SERVICE || 'Gmail',
       auth: {
-        user: process.env.SMTP_USER || '',
-        pass: process.env.SMTP_PASS || '',
+        user: process.env.SMTP_USER || 'hoangman110898@gmail.com',
+        pass: process.env.SMTP_PASS || 'gpkkexbrprnvclfx',
       },
     },
     from: process.env.EMAIL_FROM || '',

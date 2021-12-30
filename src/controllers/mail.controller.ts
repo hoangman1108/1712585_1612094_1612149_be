@@ -21,7 +21,7 @@ export class EmailController extends Controller {
       title: data.title,
       body: data.body,
       type: data.type,
-      info: JSON.parse(data.info)
+      info: JSON.parse(data.info),
     });
     return result;
   }

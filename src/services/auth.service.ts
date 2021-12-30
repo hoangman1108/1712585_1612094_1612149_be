@@ -4,7 +4,7 @@ import { IChangePasswordRequest, ITokenResponse } from '../interfaces/token.inte
 import { IUserResponse, IUserRequest } from '../interfaces/user.interface';
 import { ProvideSingleton } from '../inversify/ioc';
 import { TokenCollection } from '../models/token.model';
-import { UserAttributes, UserCollection } from '../models/user.model';
+import { StatusEnum, UserAttributes, UserCollection } from '../models/user.model';
 import { ApiError } from '../utils';
 import authUtils from '../utils/auth';
 
@@ -22,10 +22,18 @@ export default class AuthService {
     if (!findUser) {
       throw new ApiError(httpStatus.NOT_FOUND, 'USER_NOT_FOUND');
     }
+    if (findUser.count === 5) {
+      throw new ApiError(httpStatus.UNAUTHORIZED, 'ACCOUNT_IS_LOCKED');
+    }
 
     const isMatch = await findUser.comparePassword(password);
     if (!isMatch) {
+      findUser.count = Number(findUser.count) + 1;
+      findUser.save();
       throw new ApiError(httpStatus.UNAUTHORIZED, 'PASSWORD_NOT_MATCH');
+    }
+    if (findUser.status === StatusEnum.UNACTIVE) {
+      throw new ApiError(httpStatus.UNAUTHORIZED, 'ACCOUNT_UN_ACTIVE');
     }
 
     const newAccessToken = await authUtils.generateAccessToken({

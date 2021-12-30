@@ -163,7 +163,7 @@ const models: TsoaRoute.Models = {
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "EnumMail": {
         "dataType": "refEnum",
-        "enums": ["basic-content-center","basic-content-left","email-confirm","kyc-approved","kyc-spending","kyc-submission","newsletter","password-request","password-reset-success","wellcome","invite-join-class"],
+        "enums": ["basic-content-center","basic-content-left","active-account","kyc-approved","kyc-spending","kyc-submission","newsletter","password-request","password-reset-success","wellcome","invite-join-class"],
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "ISendMail": {
