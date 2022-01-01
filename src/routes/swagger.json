@@ -301,7 +301,8 @@
 					"password-request",
 					"password-reset-success",
 					"wellcome",
-					"invite-join-class"
+					"invite-join-class",
+					"reset-password"
 				],
 				"type": "string"
 			},
@@ -409,6 +410,9 @@
 						"type": "string"
 					},
 					"email": {
+						"type": "string"
+					},
+					"status": {
 						"type": "string"
 					},
 					"mssv": {
@@ -743,6 +747,54 @@
 				}
 			}
 		},
+		"/auth/forgot-password": {
+			"post": {
+				"operationId": "ForgotPassword",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"message"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Auth"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"email": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"email"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/auth/change-password": {
 			"post": {
 				"operationId": "ChangePassword",
@@ -785,6 +837,49 @@
 						}
 					}
 				}
+			}
+		},
+		"/auth/verify-account/{accountId}": {
+			"post": {
+				"operationId": "VerifyAccount",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"message"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Auth"
+				],
+				"security": [
+					{
+						"oauth2": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "accountId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
 			}
 		},
 		"/assignments-checked/{assignmentId}": {
