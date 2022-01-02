@@ -319,9 +319,7 @@
 					"type": {
 						"$ref": "#/components/schemas/EnumMail"
 					},
-					"info": {
-						"type": "string"
-					}
+					"info": {}
 				},
 				"required": [
 					"subject",
@@ -350,9 +348,7 @@
 					"type": {
 						"$ref": "#/components/schemas/EnumMail"
 					},
-					"info": {
-						"type": "string"
-					}
+					"info": {}
 				},
 				"required": [
 					"subject",

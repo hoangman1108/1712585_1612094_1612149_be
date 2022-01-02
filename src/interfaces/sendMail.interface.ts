@@ -3,7 +3,7 @@ export interface ISendMail {
   title: string;
   body: string;
   type: EnumMail;
-  info: string;
+  info: any;
 }
 
 export interface IMail {
@@ -12,7 +12,7 @@ export interface IMail {
   body: string;
   to: string;
   type: EnumMail;
-  info: string;
+  info: any;
 }
 
 export enum EnumMail {

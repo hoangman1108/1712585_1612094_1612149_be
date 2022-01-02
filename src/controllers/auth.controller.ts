@@ -27,20 +27,15 @@ export class AuthController extends Controller {
   async register(@Body() data: IUserRequest): Promise<{ message: string }> {
     validateMiddleware(registerSchema, data);
     const message = await this.authService.register(data);
-    // subject: string;
-    // title: string;
-    // body: string;
-    // type: EnumMail;
-    // info: string;
     await this.emailService.sendEmail(data.email, {
       subject: 'Xác nhận tài khoản',
       title: 'Xác nhận tài khoản',
       body: 'body',
       type: EnumMail.ActiveAccount,
-      info: JSON.stringify({
+      info: {
         url: 'http://localhost/confirm-account',
         name: data.name,
-      }),
+      } as any,
     });
     return { message };
   }
