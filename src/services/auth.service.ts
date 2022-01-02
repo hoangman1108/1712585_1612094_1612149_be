@@ -1,6 +1,5 @@
 import httpStatus from 'http-status';
-import bcrypt from 'bcrypt';
-import { IChangePasswordRequest, ITokenResponse } from '../interfaces/token.interface';
+import { ITokenResponse } from '../interfaces/token.interface';
 import { IUserResponse, IUserRequest } from '../interfaces/user.interface';
 import { ProvideSingleton } from '../inversify/ioc';
 import { TokenCollection } from '../models/token.model';
@@ -35,7 +34,8 @@ export default class AuthService {
     if (findUser.status === StatusEnum.UNACTIVE) {
       throw new ApiError(httpStatus.UNAUTHORIZED, 'ACCOUNT_UN_ACTIVE');
     }
-
+    findUser.count = 0;
+    findUser.save();
     const newAccessToken = await authUtils.generateAccessToken({
       userId: findUser.id,
       username,
@@ -70,32 +70,12 @@ export default class AuthService {
   }
 
   async verifyAccount(userId: string): Promise<any> {
-    const user: UserAttributes | null = await UserCollection.findById(userId).lean();
+    const user: UserAttributes | null = await UserCollection.findById(userId);
     if (!user) {
       throw new ApiError(httpStatus.NOT_FOUND, 'ID_USER_NOT_FOUND');
     }
     user.status = StatusEnum.ACTIVE;
     user.save();
     return 'VERIFY_SUCCESS';
-  }
-
-  async changePassword(data: IChangePasswordRequest): Promise<string> {
-    const findUser = await UserCollection.findById(data.userId);
-    if (!findUser) {
-      throw new ApiError(httpStatus.NOT_FOUND, 'USER_NOT_FOUND');
-    }
-
-    const compare = await findUser.comparePassword(data.oldPassword);
-    if (!compare) {
-      throw new ApiError(httpStatus.BAD_REQUEST, 'PASSWORD_NOT_MATCH');
-    }
-    const newPassword = await bcrypt.hash(data.newPassword, findUser.passwordSalt || '');
-    const updated = await findUser.update({
-      password: newPassword,
-    });
-    if (updated.n && updated.ok) {
-      return 'PASSWORD_CHANGED';
-    }
-    return 'CHANGE_PASSWORD_FAIL';
   }
 }
