@@ -9,6 +9,7 @@ interface AssignmentAttributes extends Document {
   name: string;
   score: number;
   teacherId: string;
+  mark?: string;
 }
 
 interface IAssignmentModel extends Model<AssignmentAttributes> {
@@ -25,6 +26,11 @@ export const assignmentSchema = new Schema({
   },
   name: {
     type: String,
+  },
+  mark: {
+    type: Boolean,
+    default: false,
+    nullable: true,
   },
   teacherId: {
     type: String,

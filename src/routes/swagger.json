@@ -150,25 +150,6 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"IChangePasswordRequest": {
-				"properties": {
-					"userId": {
-						"type": "string"
-					},
-					"oldPassword": {
-						"type": "string"
-					},
-					"newPassword": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"oldPassword",
-					"newPassword"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
 			"IClass": {
 				"properties": {
 					"name": {
@@ -558,6 +539,56 @@
 				}
 			}
 		},
+		"/assignments/mark": {
+			"post": {
+				"operationId": "ChangeMarkAssignment",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Assignments"
+				],
+				"security": [
+					{
+						"oauth2": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"mark": {
+										"type": "boolean"
+									},
+									"assignmentId": {
+										"type": "string"
+									},
+									"classId": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"mark",
+									"assignmentId",
+									"classId"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/assignments/{id}": {
 			"get": {
 				"operationId": "GetAssignment",
@@ -842,50 +873,6 @@
 									"newPassword"
 								],
 								"type": "object"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/auth/change-password": {
-			"post": {
-				"operationId": "ChangePassword",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"properties": {
-										"message": {
-											"type": "string"
-										}
-									},
-									"required": [
-										"message"
-									],
-									"type": "object"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Auth"
-				],
-				"security": [
-					{
-						"oauth2": []
-					}
-				],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/IChangePasswordRequest"
 							}
 						}
 					}
