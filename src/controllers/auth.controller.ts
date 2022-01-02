@@ -6,6 +6,7 @@ import { IChangePasswordRequest, ILoginRequest, ITokenResponse } from '../interf
 import { IUserRequest } from '../interfaces/user.interface';
 import { ProvideSingleton, inject } from '../inversify/ioc';
 import { validateMiddleware } from '../middlewares/validate.middleware';
+import { UserCollection } from '../models/user.model';
 import AuthService from '../services/auth.service';
 import EmailService from '../services/email.service';
 import { changePasswordSchema, registerSchema } from '../validations/auth.validate';
@@ -40,6 +41,29 @@ export class AuthController extends Controller {
     return { message };
   }
 
+  @Post('/forgot-password')
+  async forgotPassword(@Body() data:{ email: string }): Promise<{ message: string }> {
+    const account = await UserCollection.findOne({
+      email: data.email,
+    });
+    if (!account) {
+      return {
+        message: 'EMAIL_NOT_FOUND',
+      };
+    }
+    await this.emailService.sendEmail(data.email, {
+      subject: 'Reset Mật khẩu',
+      title: 'Reset Mật khẩu',
+      body: 'body',
+      type: EnumMail.ResetPassword,
+      info: {
+        url: 'http://localhost/reset-password-account',
+        name: account.name,
+      } as any,
+    });
+    return { message: 'CHECK_YOUR_EMAIL_TO_RESET_PASSWORD' };
+  }
+
   @Post('/change-password')
   @Security('oauth2')
   async changePassword(@Body() data: IChangePasswordRequest, @Request() request: any): Promise<{ message: string }> {
@@ -49,6 +73,15 @@ export class AuthController extends Controller {
       userId: request.user.userId,
     });
 
+    return {
+      message,
+    };
+  }
+
+  @Post('/verify-account/:accountId')
+  @Security('oauth2')
+  async verifyAccount(accountId: string):Promise<{ message: string }> {
+    const message = await this.authService.verifyAccount(accountId);
     return {
       message,
     };

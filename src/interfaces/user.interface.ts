@@ -24,6 +24,7 @@ export interface IUserResponse {
   dob?: string;
   role: string;
   email: string;
+  status?: string;
   mssv?: string;
   phone?: string;
   password: string;

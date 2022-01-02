@@ -27,4 +27,5 @@ export enum EnumMail {
   PasswordResetSuccess = 'password-reset-success',
   Wellcome = 'wellcome',
   InviteJoinClass = 'invite-join-class',
+  ResetPassword = 'reset-password',
 }

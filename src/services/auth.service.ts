@@ -69,6 +69,16 @@ export default class AuthService {
     return 'CREATE_USER_SUCCESS';
   }
 
+  async verifyAccount(userId: string): Promise<any> {
+    const user: UserAttributes | null = await UserCollection.findById(userId).lean();
+    if (!user) {
+      throw new ApiError(httpStatus.NOT_FOUND, 'ID_USER_NOT_FOUND');
+    }
+    user.status = StatusEnum.ACTIVE;
+    user.save();
+    return 'VERIFY_SUCCESS';
+  }
+
   async changePassword(data: IChangePasswordRequest): Promise<string> {
     const findUser = await UserCollection.findById(data.userId);
     if (!findUser) {
