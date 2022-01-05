@@ -50,7 +50,7 @@ export class AssignmentController extends Controller {
         _id: request.user._id,
       },
     });
-    if(!teachers?.length) {
+    if (!teachers?.length) {
       throw new ApiError(httpStatus.CONFLICT, 'YOU_NOT_A_TEACHER');
     }
     if (assignments.length > 0) {
@@ -58,16 +58,17 @@ export class AssignmentController extends Controller {
       await assignment?.updateOne({
         mark: data.mark,
       });
-      // await Promise.all(students.map((student: any) => this.emailService.sendEmail(student.email, {
-      //   subject: 'Thông báo điểm',
-      //   title: 'Thông báo điểm',
-      //   body: 'body',
-      //   type: EnumMail.NotiAllStudentAssignment,
-      //   info: {
-      //     name: student.name,
-      //     nameAssignment: assignment?.name,
-      //   } as any,
-      // })));
+      const { students }: any = await ClassCollection.findOne({ _id: data.classId }).populate('students');
+      await Promise.all(students?.map((student: any) => this.emailService.sendEmail(student.email, {
+        subject: 'Thông báo điểm',
+        title: 'Thông báo điểm',
+        body: 'body',
+        type: EnumMail.NotiAllStudentAssignment,
+        info: {
+          name: student.name,
+          nameAssignment: assignment?.name,
+        } as any,
+      })));
       return 'UPDATE_MARK_SUCCESS';
     }
     return 'NOT_FOUND_ASSIGNMENT_IN_CLASS';

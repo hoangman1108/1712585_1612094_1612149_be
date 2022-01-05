@@ -270,8 +270,156 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"IComment": {
+				"properties": {
+					"userId": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"role": {
+						"type": "string"
+					},
+					"comment": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"userId",
+					"name",
+					"role",
+					"comment"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"MarkEnum": {
+				"enum": [
+					"accept",
+					"reject",
+					"processing"
+				],
+				"type": "string"
+			},
+			"IGradeViewResponse": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"classId": {
+						"type": "string"
+					},
+					"studentId": {
+						"type": "string"
+					},
+					"Mssv": {
+						"type": "string"
+					},
+					"composition": {
+						"type": "string"
+					},
+					"current": {
+						"type": "number",
+						"format": "double"
+					},
+					"expect": {
+						"type": "number",
+						"format": "double"
+					},
+					"explanation": {
+						"type": "string"
+					},
+					"comments": {
+						"items": {
+							"$ref": "#/components/schemas/IComment"
+						},
+						"type": "array"
+					},
+					"mark": {
+						"$ref": "#/components/schemas/MarkEnum"
+					}
+				},
+				"required": [
+					"classId",
+					"studentId",
+					"Mssv",
+					"composition",
+					"current",
+					"expect",
+					"explanation",
+					"mark"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IGradeViewRequest": {
+				"properties": {
+					"classId": {
+						"type": "string"
+					},
+					"studentId": {
+						"type": "string"
+					},
+					"Mssv": {
+						"type": "string"
+					},
+					"composition": {
+						"type": "string"
+					},
+					"current": {
+						"type": "number",
+						"format": "double"
+					},
+					"expect": {
+						"type": "number",
+						"format": "double"
+					},
+					"explanation": {
+						"type": "string"
+					},
+					"comments": {
+						"items": {
+							"$ref": "#/components/schemas/IComment"
+						},
+						"type": "array"
+					},
+					"mark": {
+						"$ref": "#/components/schemas/MarkEnum"
+					}
+				},
+				"required": [
+					"classId",
+					"studentId",
+					"Mssv",
+					"composition",
+					"current",
+					"expect",
+					"explanation",
+					"mark"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IUpdateMarkRequest": {
+				"properties": {
+					"gradeViewId": {
+						"type": "string"
+					},
+					"mark": {
+						"$ref": "#/components/schemas/MarkEnum"
+					}
+				},
+				"required": [
+					"gradeViewId",
+					"mark"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"EnumMail": {
 				"enum": [
+					"noti-all-student-assignment",
 					"basic-content-center",
 					"basic-content-left",
 					"active-account",
@@ -1584,6 +1732,163 @@
 						}
 					}
 				]
+			}
+		},
+		"/grade-view": {
+			"post": {
+				"operationId": "CreateGradeView",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/IGradeViewResponse"
+										},
+										{}
+									]
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Grade Views"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/IGradeViewRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/grade-view/comment/{gradeViewId}": {
+			"post": {
+				"operationId": "CommentGradeView",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/IGradeViewResponse"
+										},
+										{}
+									]
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Grade Views"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "gradeViewId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/IComment"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/grade-view/{classId}/class": {
+			"get": {
+				"operationId": "ListGradeView",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/IGradeViewResponse"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Grade Views"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "classId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/grade-view/update-mark": {
+			"post": {
+				"operationId": "UpdateMarkGradeView",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"message"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Grade Views"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/IUpdateMarkRequest"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/email": {
