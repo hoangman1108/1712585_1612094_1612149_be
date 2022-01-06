@@ -56,7 +56,7 @@ export const userSchema = new Schema({
   role: {
     type: String,
     required: true,
-    enum: ['student', 'teacher'],
+    enum: ['student', 'teacher', 'admin'],
     default: 'student',
   },
   email: {

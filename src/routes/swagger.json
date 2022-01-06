@@ -589,10 +589,61 @@
 				},
 				"type": "object",
 				"additionalProperties": false
+			},
+			"IUpdateAccount": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"dob": {
+						"type": "string"
+					},
+					"role": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"mssv": {
+						"type": "string"
+					},
+					"phone": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					},
+					"facebook": {
+						"type": "string"
+					},
+					"google": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"password"
+				],
+				"type": "object",
+				"additionalProperties": false
 			}
 		},
 		"securitySchemes": {
 			"oauth2": {
+				"type": "apiKey",
+				"name": "authorization",
+				"in": "header",
+				"authorizationUrl": "http://swagger.io/api/oauth/dialog",
+				"flow": "implicit",
+				"scopes": {
+					"write:pets": "modify things",
+					"read:pets": "read things"
+				}
+			},
+			"admin": {
 				"type": "apiKey",
 				"name": "authorization",
 				"in": "header",
@@ -2019,7 +2070,7 @@
 				]
 			}
 		},
-		"/point-assignment/show-point-studdent-inprofile": {
+		"/point-assignment/show-point-student-in-profile": {
 			"get": {
 				"operationId": "ShowPointStudentInProfile",
 				"responses": {
@@ -2306,6 +2357,140 @@
 					{
 						"in": "path",
 						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/users/admin/create": {
+			"post": {
+				"operationId": "CreateAdmin",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"tags": [
+					"User"
+				],
+				"security": [
+					{
+						"admin": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/IUserRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/users/admin/update-user": {
+			"post": {
+				"operationId": "UpdateAccountUser",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"tags": [
+					"User"
+				],
+				"security": [
+					{
+						"admin": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/IUpdateAccount"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/users/admin/delete-user/{userId}": {
+			"post": {
+				"operationId": "DeleteAccountUser",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"tags": [
+					"User"
+				],
+				"security": [
+					{
+						"admin": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "userId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/users/admin/delete-class/{classId}": {
+			"post": {
+				"operationId": "DeleteClassByAdmin",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"tags": [
+					"User"
+				],
+				"security": [
+					{
+						"admin": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "classId",
 						"required": true,
 						"schema": {
 							"type": "string"

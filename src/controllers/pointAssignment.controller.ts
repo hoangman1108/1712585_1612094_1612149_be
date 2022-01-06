@@ -10,6 +10,7 @@ import { UpdatePointByTeacherRequest } from '../interfaces/pointAssingment.inter
 import PointAssignmentService from '../services/pointAssignment.service';
 import PointAssignmentCollection from '../models/pointAssignment.model';
 import { UserCollection } from '../models/user.model';
+import { AssignmentCollection } from '../models/assignment.model';
 
 const { promisify } = require('util');
 
@@ -50,6 +51,16 @@ export class PointAssignmentController extends Controller {
       return {
         message: 'STUDENT_NOT_MAPPING_MSSV',
       };
+    }
+    const checkAssignment = await AssignmentCollection.findById(assignmentId);
+    if (!checkAssignment) {
+      return {
+        message: 'ASSIGNMENT_NOT_FOUND',
+      };
+    }
+
+    if (!checkAssignment?.mark) {
+      return { message: 'NO_SCORE_FOR_THIS_ASSIGNMENT' };
     }
     const result = await PointAssignmentCollection.findOne({
       assignmentId,

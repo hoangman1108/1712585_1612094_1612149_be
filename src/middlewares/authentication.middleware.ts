@@ -25,7 +25,6 @@ export const authenticateUser = (passport: PassportStatic) => {
   passport.use(new Strategy(options, async (jwtPayload: IJwtPayload, done: VerifiedCallback) => {
     // const result = await <IUserResponse>_userRepository.getUserById(jwtPayload.user._id);
     const result = await UserCollection.findById(jwtPayload.user?._id);
-    console.log('jwtPayload.user?._id: ', jwtPayload.user?._id);
     if (result instanceof Error) return done(result, false);
     if (!result) {
       return done(null, false);
@@ -45,6 +44,20 @@ export async function expressAuthentication(
       const itoken = await TokenCollection.findOne({ userId: result.userId });
       if (!itoken) {
         throw new ApiError(httpStatus.FORBIDDEN, 'ACCOUNT_ACCESS_DENIED');
+      }
+      return result;
+    });
+  }
+  if (securityName === 'admin') {
+    const token = request.body.token || request.query.token || request.headers.authorization;
+    return authUtils.verifyJWT(token || '').then(async (result: any) => {
+      const itoken = await TokenCollection.findOne({ userId: result.userId });
+      if (!itoken) {
+        throw new ApiError(httpStatus.FORBIDDEN, 'ACCOUNT_ACCESS_DENIED');
+      }
+      const checkRole = await UserCollection.findById(result.userId).lean();
+      if (checkRole?.role !== 'admin') {
+        throw new ApiError(httpStatus.FORBIDDEN, 'ACCOUNT_NEED_ROLE_ADMIN');
       }
       return result;
     });

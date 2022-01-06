@@ -3,7 +3,7 @@ import Joi from 'joi';
 export const registerSchema = Joi.object().keys({
   name: Joi.string().min(1).max(50).required(),
   dob: Joi.string(),
-  role: Joi.string().valid('student', 'teacher').required(),
+  role: Joi.string().valid('student', 'teacher', 'admin').required(),
   email: Joi.string().email().required(),
   mssv: Joi.string(),
   phone: Joi.string().min(10).max(12).regex(/^\d+$/),

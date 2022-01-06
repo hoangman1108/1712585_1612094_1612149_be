@@ -19,6 +19,17 @@
           "write:pets": "modify things",
           "read:pets": "read things"
         }
+      },
+      "admin": {
+        "type": "apiKey",
+        "name": "authorization",
+        "in": "header",
+        "authorizationUrl": "http://swagger.io/api/oauth/dialog",
+        "flow": "implicit",
+        "scopes": {
+          "write:pets": "modify things",
+          "read:pets": "read things"
+        }
       }
     }
   },
