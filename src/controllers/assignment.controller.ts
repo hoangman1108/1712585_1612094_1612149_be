@@ -44,15 +44,15 @@ export class AssignmentController extends Controller {
         _id: data.assignmentId,
       },
     });
-    const { teachers }: any = await ClassCollection.findOne({ _id: data.classId }).populate({
-      path: 'teachers',
-      match: {
-        _id: request.user._id,
-      },
-    });
-    if (!teachers?.length) {
-      throw new ApiError(httpStatus.CONFLICT, 'YOU_NOT_A_TEACHER');
-    }
+    // const { teachers }: any = await ClassCollection.findOne({ _id: data.classId }).populate({
+    //   path: 'teachers',
+    //   match: {
+    //     _id: request.user._id,
+    //   },
+    // });
+    // if (!teachers?.length) {
+    //   throw new ApiError(httpStatus.CONFLICT, 'YOU_NOT_A_TEACHER');
+    // }
     if (assignments.length > 0) {
       const assignment = await AssignmentCollection.findById(data.assignmentId);
       await assignment?.updateOne({

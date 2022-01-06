@@ -1969,7 +1969,11 @@
 				"tags": [
 					"Point Assingments"
 				],
-				"security": [],
+				"security": [
+					{
+						"oauth2": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -1982,9 +1986,9 @@
 				]
 			}
 		},
-		"/point-assignment/show-point-assignment/{classId}/{assignmentId}": {
+		"/point-assignment/show-point-student/{assignmentId}": {
 			"get": {
-				"operationId": "ShoưPointAssignmentInClass",
+				"operationId": "ShowPointAssignmentForStudent",
 				"responses": {
 					"200": {
 						"description": "Ok",
@@ -1998,7 +2002,68 @@
 				"tags": [
 					"Point Assingments"
 				],
-				"security": [],
+				"security": [
+					{
+						"oauth2": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "assignmentId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/point-assignment/show-point-studdent-inprofile": {
+			"get": {
+				"operationId": "ShowPointStudentInProfile",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Point Assingments"
+				],
+				"security": [
+					{
+						"oauth2": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/point-assignment/show-point-assignment/{classId}/{assignmentId}": {
+			"get": {
+				"operationId": "ShowPointAssignmentInClass",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Point Assingments"
+				],
+				"security": [
+					{
+						"oauth2": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -2035,7 +2100,11 @@
 				"tags": [
 					"Point Assingments"
 				],
-				"security": [],
+				"security": [
+					{
+						"oauth2": []
+					}
+				],
 				"parameters": []
 			}
 		},

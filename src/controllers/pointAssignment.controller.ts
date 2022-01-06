@@ -8,6 +8,8 @@ import reader from 'xlsx';
 import { ProvideSingleton, inject } from '../inversify/ioc';
 import { UpdatePointByTeacherRequest } from '../interfaces/pointAssingment.interface';
 import PointAssignmentService from '../services/pointAssignment.service';
+import PointAssignmentCollection from '../models/pointAssignment.model';
+import { UserCollection } from '../models/user.model';
 
 const { promisify } = require('util');
 
@@ -22,7 +24,6 @@ export class PointAssignmentController extends Controller {
   }
 
   @Post('update-by-teacher')
-  // @Security('oauth2')
   public async updatePointByTeacher(
     @Body() data: UpdatePointByTeacherRequest,
   ): Promise<any> {
@@ -31,7 +32,7 @@ export class PointAssignmentController extends Controller {
   }
 
   @Get('show-full-point/{classId}')
-  // @Security('oauth2')
+  @Security('oauth2')
   public async showFullPointInClass(
     classId: string,
   ): Promise<any> {
@@ -39,9 +40,54 @@ export class PointAssignmentController extends Controller {
     return response;
   }
 
+  @Get('show-point-student/{assignmentId}')
+  @Security('oauth2')
+  public async showPointAssignmentForStudent(
+    @Request() request: any, assignmentId: string,
+  ): Promise<any> {
+    const student = await UserCollection.findById(request.user.userId);
+    if (!student?.mssv) {
+      return {
+        message: 'STUDENT_NOT_MAPPING_MSSV',
+      };
+    }
+    const result = await PointAssignmentCollection.findOne({
+      assignmentId,
+      MSSV: student.mssv,
+    });
+    if (!result) {
+      return {
+        message: 'NOT_FOUND_POINT_ASSIGNMENT',
+      };
+    }
+    return result;
+  }
+
+  @Get('show-point-student-in-profile')
+  @Security('oauth2')
+  public async showPointStudentInProfile(
+    @Request() request: any,
+  ): Promise<any> {
+    const student = await UserCollection.findById(request.user.userId);
+    if (!student?.mssv) {
+      return {
+        message: 'STUDENT_NOT_MAPPING_MSSV',
+      };
+    }
+    const result = await PointAssignmentCollection.find({
+      MSSV: student.mssv,
+    });
+    if (!result) {
+      return {
+        message: 'NOT_FOUND_POINT_ASSIGNMENT',
+      };
+    }
+    return result;
+  }
+
   @Get('show-point-assignment/{classId}/{assignmentId}')
-  // @Security('oauth2')
-  public async shoưPointAssignmentInClass(
+  @Security('oauth2')
+  public async showPointAssignmentInClass(
     classId: string,
     assignmentId: string,
   ): Promise<any> {
@@ -49,16 +95,8 @@ export class PointAssignmentController extends Controller {
     return response;
   }
 
-  // @Get('show-full-assignment-point/{classId}')
-  // public async showFullAssignmentPoint(
-  //   classId: string,
-  // ): Promise<any> {
-  //   const response = await this.pointService.showAllAssignmentPoint({ classId });
-  //   return response;
-  // }
-
   @Post('upload-file-point-by-teacher')
-  // @Security('oauth2')
+  @Security('oauth2')
   public async uploadPointByTeacher(
     @Request() request: any,
   ): Promise<any> {
