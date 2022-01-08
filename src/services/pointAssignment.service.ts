@@ -142,6 +142,7 @@ export default class PointAssignmentService {
       classId: data.classId,
       assignmentId: data.assignmentId,
       name: assignment.name,
+      mark: assignment.mark,
       points: responses.map((value) => ({
         fullName: value.fullName,
         MSSV: value.MSSV,

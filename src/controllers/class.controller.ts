@@ -20,6 +20,12 @@ export class ClassController extends Controller {
     return this.classService.list();
   }
 
+  @Get('/admin-get-classes')
+  @Security('admin')
+  async getClassesFromAdmin(): Promise<IClass[]> {
+    return this.classService.list();
+  }
+
   @Get('/{classId}')
   @Security('oauth2')
   async getDetailClass(classId: string): Promise<IClass> {
