@@ -113,12 +113,12 @@ export default class AuthService {
   }
 
   async register(data: IUserRequest): Promise<string> {
-    const checkMssv = await UserCollection.findOne({
-      mssv: data.mssv,
-    });
-    if (checkMssv) {
-      throw new ApiError(httpStatus.FOUND, 'MSSV_IS_EXISTS');
-    }
+    // const checkMssv = await UserCollection.findOne({
+    //   mssv: data.mssv,
+    // });
+    // if (checkMssv) {
+    //   throw new ApiError(httpStatus.FOUND, 'MSSV_IS_EXISTS');
+    // }
     const user: IUserResponse | null = await UserCollection.create(data);
     if (!user) {
       throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, 'USER_CREATE_ERROR');
