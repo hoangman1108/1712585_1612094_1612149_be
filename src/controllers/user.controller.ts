@@ -1,3 +1,4 @@
+import httpStatus from 'http-status';
 import {
   Tags, Route, Controller, Put, Delete, Body, Get, Security, Request, Post,
 } from 'tsoa';
@@ -8,6 +9,7 @@ import { ProvideSingleton, inject } from '../inversify/ioc';
 import { ClassCollection } from '../models/class.model';
 import { StatusEnum, UserCollection } from '../models/user.model';
 import UserService from '../services/user.service';
+import { ApiError } from '../utils';
 
 @Route('/users')
 @Tags('User')
@@ -64,14 +66,22 @@ export class UserController extends Controller {
       email: data.email,
     }).lean();
     if (find) {
-      return {
-        message: 'EMAIL_IS_EXISTS',
-      };
+      throw new ApiError(httpStatus.FOUND, 'EMAIL_IS_EXISTS');
     }
-    await UserCollection.create({ ...data, role: 'admin', status: StatusEnum.ACTIVE });
-    return {
-      message: 'CREATE_ADMIN_ACCOUNT_SUCCESS',
-    };
+    const response = await UserCollection.create({ ...data, role: 'admin', status: StatusEnum.ACTIVE });
+    return response;
+  }
+
+  @Get('/admin/all-user')
+  @Security('admin')
+  async getAllUserForAdmin(): Promise<any> {
+    const response = await UserCollection.find({
+      $or: [
+        { role: 'teacher' },
+        { role: 'student' },
+      ],
+    });
+    return response;
   }
 
   @Post('/admin/update-user')
@@ -87,6 +97,23 @@ export class UserController extends Controller {
     } catch {
       return {
         message: 'UPDATE_ACCOUNT_USER_FAIL',
+      };
+    }
+  }
+
+  @Post('/admin/delete')
+  @Security('admin')
+  async deleteAccountAdmin(@Body() data: { email: string }): Promise<any> {
+    try {
+      await UserCollection.deleteOne({
+        email: data.email,
+      });
+      return {
+        message: 'DELETE_ACCOUNT_ADMIN_SUCCESS',
+      };
+    } catch {
+      return {
+        message: 'DELETE_ACCOUNT_ADMIN_FAIL',
       };
     }
   }

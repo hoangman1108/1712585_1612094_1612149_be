@@ -39,6 +39,7 @@ export interface IUserUpdateRequest {
   id?: string;
   name?: string;
   dob?: string;
+  mssv?: string;
   role?: string;
   phone?: string;
 }

@@ -72,7 +72,7 @@ export default class AuthService {
       throw new ApiError(httpStatus.NOT_FOUND, 'USER_NOT_FOUND');
     }
 
-    if(findUser.role !== 'admin') {
+    if (findUser.role !== 'admin') {
       throw new ApiError(httpStatus.FORBIDDEN, 'NEED_USE_ACCOUNT_ROLE_ADMIN');
     }
 
@@ -113,6 +113,12 @@ export default class AuthService {
   }
 
   async register(data: IUserRequest): Promise<string> {
+    const checkMssv = await UserCollection.findOne({
+      mssv: data.mssv,
+    });
+    if (checkMssv) {
+      throw new ApiError(httpStatus.FOUND, 'MSSV_IS_EXISTS');
+    }
     const user: IUserResponse | null = await UserCollection.create(data);
     if (!user) {
       throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, 'USER_CREATE_ERROR');

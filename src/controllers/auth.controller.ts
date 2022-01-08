@@ -1,5 +1,5 @@
 import {
-  Body, Controller, Post, Route, Tags, Security, Request, Query,
+  Body, Controller, Post, Route, Tags, Query,
 } from 'tsoa';
 import bcrypt from 'bcrypt';
 import { EnumMail } from '../interfaces/sendMail.interface';

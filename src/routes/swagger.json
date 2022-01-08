@@ -580,6 +580,9 @@
 					"dob": {
 						"type": "string"
 					},
+					"mssv": {
+						"type": "string"
+					},
 					"role": {
 						"type": "string"
 					},
@@ -2431,6 +2434,30 @@
 				}
 			}
 		},
+		"/users/admin/all-user": {
+			"get": {
+				"operationId": "GetAllUserForAdmin",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"tags": [
+					"User"
+				],
+				"security": [
+					{
+						"admin": []
+					}
+				],
+				"parameters": []
+			}
+		},
 		"/users/admin/update-user": {
 			"post": {
 				"operationId": "UpdateAccountUser",
@@ -2459,6 +2486,48 @@
 						"application/json": {
 							"schema": {
 								"$ref": "#/components/schemas/IUpdateAccount"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/users/admin/delete": {
+			"post": {
+				"operationId": "DeleteAccountAdmin",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"tags": [
+					"User"
+				],
+				"security": [
+					{
+						"admin": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"email": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"email"
+								],
+								"type": "object"
 							}
 						}
 					}

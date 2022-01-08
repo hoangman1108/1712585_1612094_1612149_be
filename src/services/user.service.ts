@@ -28,6 +28,14 @@ export default class UserService {
   }
 
   async update(data: IUserUpdateRequest): Promise<IUserResponse> {
+    if (data?.mssv) {
+      const find = await UserCollection.findOne({
+        mssv: data.mssv,
+      }).lean();
+      if (find) {
+        throw new ApiError(httpStatus.FOUND, 'MSSV_IS_EXISTS');
+      }
+    }
     const user: IUserResponse | null = await UserCollection.findByIdAndUpdate(data.id, data);
     if (!user) {
       throw new ApiError(httpStatus.NOT_FOUND, 'USER_NOT_FOUND');
