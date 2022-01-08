@@ -87,7 +87,7 @@ export class PointAssignmentController extends Controller {
     }
     const result = await PointAssignmentCollection.find({
       MSSV: student.mssv,
-    });
+    }).populate('classId', 'name').populate('assignmentId', 'name');
     if (!result) {
       return {
         message: 'NOT_FOUND_POINT_ASSIGNMENT',
