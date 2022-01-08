@@ -61,6 +61,57 @@ export default class AuthService {
     };
   }
 
+  async loginAdmin(username: string, password: string): Promise<ITokenResponse> {
+    const findUser: UserAttributes | null = await UserCollection.findOne({
+      $or: [
+        { email: username },
+      ],
+    });
+
+    if (!findUser) {
+      throw new ApiError(httpStatus.NOT_FOUND, 'USER_NOT_FOUND');
+    }
+
+    if(findUser.role !== 'admin') {
+      throw new ApiError(httpStatus.FORBIDDEN, 'NEED_USE_ACCOUNT_ROLE_ADMIN');
+    }
+
+    const isMatch = await findUser.comparePassword(password);
+    if (!isMatch) {
+      findUser.count = Number(findUser.count) + 1;
+      findUser.save();
+      throw new ApiError(httpStatus.UNAUTHORIZED, 'PASSWORD_NOT_MATCH');
+    }
+    if (findUser.status === StatusEnum.UNACTIVE) {
+      throw new ApiError(httpStatus.UNAUTHORIZED, 'ACCOUNT_UN_ACTIVE');
+    }
+    findUser.count = 0;
+    findUser.save();
+    const newAccessToken = await authUtils.generateAccessToken({
+      userId: findUser.id,
+      username,
+    });
+    const newRefreshToken = await authUtils.generateRefreshToken({
+      userId: findUser.id,
+      username,
+    });
+
+    const authToken = {
+      accessToken: newAccessToken,
+      refreshToken: newRefreshToken,
+      userId: findUser.id,
+    };
+
+    const token: any = await TokenCollection.create(authToken);
+
+    token.role = findUser.role;
+
+    return {
+      ...token.toJSON(),
+      role: findUser.role,
+    };
+  }
+
   async register(data: IUserRequest): Promise<string> {
     const user: IUserResponse | null = await UserCollection.create(data);
     if (!user) {

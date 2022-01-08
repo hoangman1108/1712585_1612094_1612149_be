@@ -125,7 +125,18 @@ export default class PointAssignmentService {
   }
 
   async showPointAssignmentInClass(data: { classId: string; assignmentId: string }) {
-    const responses = await PointAssignmentCollection.find({ classId: data.classId, assignmentId: data.assignmentId });
+    let responses = await PointAssignmentCollection.find({ classId: data.classId, assignmentId: data.assignmentId });
+    if (!responses?.length) {
+      const students = await StudentCollection.findOne({ classId: data.classId }).lean();
+      const assignmentPoints = students?.list.map((student: any) => ({
+        ...student,
+        classId: data.classId,
+        assignmentId: data.assignmentId,
+        points: null,
+      }));
+      await PointAssignmentCollection.insertMany(assignmentPoints);
+      responses = await PointAssignmentCollection.find({ classId: data.classId, assignmentId: data.assignmentId });
+    }
     const assignment: any = await AssignmentCollection.findOne({ _id: data.assignmentId });
     return {
       classId: data.classId,

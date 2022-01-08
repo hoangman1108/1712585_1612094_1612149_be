@@ -25,6 +25,11 @@ export class AuthController extends Controller {
     return this.authService.login(data.username, data.password);
   }
 
+  @Post('/login-admin')
+  async loginAdmin(@Body() data: ILoginRequest): Promise<ITokenResponse> {
+    return this.authService.loginAdmin(data.username, data.password);
+  }
+
   @Post('/signup')
   async register(@Body() data: IUserRequest): Promise<{ message: string }> {
     validateMiddleware(registerSchema, data);
