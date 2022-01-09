@@ -48,7 +48,7 @@ export class AuthController extends Controller {
   }
 
   @Post('/forgot-password')
-  async forgotPassword(@Body() data:{ email: string }): Promise<{ message: string }> {
+  async forgotPassword(@Body() data: { email: string }): Promise<{ message: string }> {
     const account = await UserCollection.findOne({
       email: data.email,
     });
@@ -63,7 +63,7 @@ export class AuthController extends Controller {
       body: 'body',
       type: EnumMail.ResetPassword,
       info: {
-        url: 'http://localhost/reset-password-account',
+        url: `http://localhost:3000/auth/verify/reset-password/${account.id}`,
         name: account.name,
       } as any,
     });
@@ -71,7 +71,7 @@ export class AuthController extends Controller {
   }
 
   @Post('/reset-password')
-  async resetPassword(@Query() userId: string, @Body() data:{ newPassword: string }): Promise<{ message: string }> {
+  async resetPassword(@Query() userId: string, @Body() data: { newPassword: string }): Promise<{ message: string }> {
     const account = await UserCollection.findById(userId);
     if (!account) {
       return {
@@ -88,7 +88,7 @@ export class AuthController extends Controller {
   }
 
   @Post('/verify-account/:accountId')
-  async verifyAccount(accountId: string):Promise<{ message: string }> {
+  async verifyAccount(accountId: string): Promise<{ message: string }> {
     const message = await this.authService.verifyAccount(accountId);
     return {
       message,
