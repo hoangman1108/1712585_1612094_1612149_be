@@ -156,8 +156,8 @@ const models: TsoaRoute.Models = {
     "IComment": {
         "dataType": "refObject",
         "properties": {
-            "userId": {"dataType":"string","required":true},
             "name": {"dataType":"string","required":true},
+            "email": {"dataType":"string","required":true},
             "role": {"dataType":"string","required":true},
             "comment": {"dataType":"string","required":true},
         },

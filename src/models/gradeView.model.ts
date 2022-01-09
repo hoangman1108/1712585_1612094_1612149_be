@@ -56,7 +56,8 @@ export const gradeViewSchema = new Schema({
   },
   comments: {
     type: [{
-      userId: String,
+      name: String,
+      email: String,
       role: String,
       comment: String,
     }],

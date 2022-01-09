@@ -272,10 +272,10 @@
 			},
 			"IComment": {
 				"properties": {
-					"userId": {
+					"name": {
 						"type": "string"
 					},
-					"name": {
+					"email": {
 						"type": "string"
 					},
 					"role": {
@@ -286,8 +286,8 @@
 					}
 				},
 				"required": [
-					"userId",
 					"name",
+					"email",
 					"role",
 					"comment"
 				],

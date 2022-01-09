@@ -1,6 +1,6 @@
 export interface IComment {
-  userId: string;
   name: string;
+  email: string;
   role: string;
   comment: string;
 }
