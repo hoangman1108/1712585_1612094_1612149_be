@@ -112,7 +112,7 @@ export default class AuthService {
     };
   }
 
-  async register(data: IUserRequest): Promise<string> {
+  async register(data: IUserRequest): Promise<any> {
     // const checkMssv = await UserCollection.findOne({
     //   mssv: data.mssv,
     // });
@@ -123,7 +123,7 @@ export default class AuthService {
     if (!user) {
       throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, 'USER_CREATE_ERROR');
     }
-    return 'CREATE_USER_SUCCESS';
+    return user;
   }
 
   async verifyAccount(userId: string): Promise<any> {

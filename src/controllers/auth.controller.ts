@@ -33,18 +33,18 @@ export class AuthController extends Controller {
   @Post('/signup')
   async register(@Body() data: IUserRequest): Promise<{ message: string }> {
     validateMiddleware(registerSchema, data);
-    const message = await this.authService.register(data);
+    const response = await this.authService.register(data);
     await this.emailService.sendEmail(data.email, {
       subject: 'Xác nhận tài khoản',
       title: 'Xác nhận tài khoản',
       body: 'body',
       type: EnumMail.ActiveAccount,
       info: {
-        url: 'http://localhost/confirm-account',
+        url: `http://localhost:3000/auth/verify/account/${response.id}`,
         name: data.name,
       } as any,
     });
-    return { message };
+    return { message: 'CREATE_USER_SUCCESS' };
   }
 
   @Post('/forgot-password')
