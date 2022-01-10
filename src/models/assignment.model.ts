@@ -9,7 +9,7 @@ interface AssignmentAttributes extends Document {
   name: string;
   score: number;
   teacherId: string;
-  mark?: string;
+  mark?: boolean;
 }
 
 interface IAssignmentModel extends Model<AssignmentAttributes> {

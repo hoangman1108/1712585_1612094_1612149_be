@@ -89,6 +89,14 @@ export class AssignmentController extends Controller {
     return this.assignmentService.detail(id);
   }
 
+  @Get('/mark-done/{classId}')
+  // @Security('oauth2')
+  public async getAssignmentMarkDone(classId: string): Promise<IAssignmentResponse[]> {
+    const { assignments }: any = await ClassCollection.findOne({ _id: classId }).populate('assignments');
+    const response = assignments.filter((assignment: any) => assignment.mark === true);
+    return response;
+  }
+
   @Post('/')
   @Security('oauth2')
   public async createAssignment(@Request() request: any, @Body() data: IAssignmentCreateRequest): Promise<IAssignmentResponse> {
