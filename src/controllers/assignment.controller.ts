@@ -9,6 +9,8 @@ import { EnumMail } from '../interfaces/sendMail.interface';
 import { ProvideSingleton, inject } from '../inversify/ioc';
 import { AssignmentCollection } from '../models/assignment.model';
 import { ClassCollection } from '../models/class.model';
+import PointAssignmentCollection from '../models/pointAssignment.model';
+import { StudentCollection } from '../models/student.model';
 import AssignmentService from '../services/assignment.service';
 import EmailService from '../services/email.service';
 import { ApiError } from '../utils';
@@ -44,17 +46,22 @@ export class AssignmentController extends Controller {
         _id: data.assignmentId,
       },
     });
-    const { teachers }: any = await ClassCollection.findOne({ _id: data.classId }).populate({
-      path: 'teachers',
-      match: {
-        _id: request.user.userId,
-      },
-    });
-    if (!teachers?.length) {
-      throw new ApiError(httpStatus.CONFLICT, 'YOU_NOT_A_TEACHER');
-    }
+    // const { teachers }: any = await ClassCollection.findOne({ _id: data.classId }).populate({
+    //   path: 'teachers',
+    //   match: {
+    //     _id: request.user.userId,
+    //   },
+    // });
+    // if (!teachers?.length) {
+    //   throw new ApiError(httpStatus.CONFLICT, 'YOU_NOT_A_TEACHER');
+    // }
     if (assignments.length > 0) {
       const assignment = await AssignmentCollection.findById(data.assignmentId);
+      const findPointAssignment = await PointAssignmentCollection.find({ assignmentId: assignment?._id }).lean();
+      const { list }: any = await StudentCollection.findOne({ classId: data.classId });
+      if (findPointAssignment.length !== list?.length) {
+        return 'NEED_FILL_SCORE_FOR_ALL_STUDENT_BEFORE_MARK_DONE';
+      }
       await assignment?.updateOne({
         mark: data.mark,
       });

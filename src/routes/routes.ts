@@ -281,7 +281,7 @@ const models: TsoaRoute.Models = {
             "mssv": {"dataType":"string"},
             "role": {"dataType":"string"},
             "phone": {"dataType":"string"},
-            "status": {"dataType":"string"},
+            "status": {"dataType":"any"},
         },
         "additionalProperties": false,
     },

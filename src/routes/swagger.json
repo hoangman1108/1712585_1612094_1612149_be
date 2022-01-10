@@ -589,9 +589,7 @@
 					"phone": {
 						"type": "string"
 					},
-					"status": {
-						"type": "string"
-					}
+					"status": {}
 				},
 				"type": "object",
 				"additionalProperties": false
