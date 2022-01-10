@@ -1,6 +1,5 @@
-import httpStatus from 'http-status';
 import {
-  Body, Controller, Delete, Get, Post, Put, Route, Tags, Security, Request, Query, Path,
+  Body, Controller, Delete, Get, Post, Put, Route, Tags, Security, Request, Query,
 } from 'tsoa';
 import {
   IAssignmentCreateRequest, IAssignmentResponse, IAssignmentUpdateRequest,
@@ -13,7 +12,6 @@ import PointAssignmentCollection from '../models/pointAssignment.model';
 import { StudentCollection } from '../models/student.model';
 import AssignmentService from '../services/assignment.service';
 import EmailService from '../services/email.service';
-import { ApiError } from '../utils';
 
 @Tags('Assignments')
 @Route('/assignments')
@@ -46,18 +44,13 @@ export class AssignmentController extends Controller {
         _id: data.assignmentId,
       },
     });
-    // const { teachers }: any = await ClassCollection.findOne({ _id: data.classId }).populate({
-    //   path: 'teachers',
-    //   match: {
-    //     _id: request.user.userId,
-    //   },
-    // });
-    // if (!teachers?.length) {
-    //   throw new ApiError(httpStatus.CONFLICT, 'YOU_NOT_A_TEACHER');
-    // }
     if (assignments.length > 0) {
       const assignment = await AssignmentCollection.findById(data.assignmentId);
-      const findPointAssignment = await PointAssignmentCollection.find({ assignmentId: assignment?._id }).lean();
+      const findPointAssignment = await PointAssignmentCollection.find({
+        assignmentId: assignment?._id,
+        point: { $exists: true },
+      }).lean();
+      console.log('findPointAssignment: ', findPointAssignment);
       const { list }: any = await StudentCollection.findOne({ classId: data.classId });
       if (findPointAssignment.length !== list?.length) {
         return 'NEED_FILL_SCORE_FOR_ALL_STUDENT_BEFORE_MARK_DONE';
@@ -92,8 +85,8 @@ export class AssignmentController extends Controller {
   @Get('/mark-done/{classId}')
   // @Security('oauth2')
   public async getAssignmentMarkDone(classId: string): Promise<IAssignmentResponse[]> {
-    const { assignments }: any = await ClassCollection.findOne({ _id: classId }).populate('assignments');
-    const response = assignments.filter((assignment: any) => assignment.mark === true);
+    const data: any = await ClassCollection.findOne({ _id: classId }).populate('assignments');
+    const response = data?.assignments?.filter((assignment: any) => assignment.mark === true) || [];
     return response;
   }
 

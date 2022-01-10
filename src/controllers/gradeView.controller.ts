@@ -1,5 +1,5 @@
 import {
-  Tags, Route, Controller, Post, Body, Get,
+  Tags, Route, Controller, Post, Body, Get, Security, Request,
 } from 'tsoa';
 import {
   IComment, IGradeViewRequest, IGradeViewResponse, IUpdateMarkRequest,
@@ -13,6 +13,7 @@ import EmailService from '../services/email.service';
 
 @Route('/grade-view')
 @Tags('Grade Views')
+@Security('oauth2')
 @ProvideSingleton(GradeViewController)
 export class GradeViewController extends Controller {
   constructor(@inject(EmailService) private emailService: EmailService) {
@@ -20,7 +21,15 @@ export class GradeViewController extends Controller {
   }
 
   @Post('/')
+  @Security('oauth2')
   async createGradeView(@Body() data: IGradeViewRequest): Promise<IGradeViewResponse | any> {
+    const checkPoint = await PointAssignmentCollection.findOne({ assignmentId: data.composition, MSSV: data.Mssv, point: { $exists: true } });
+
+    if (!checkPoint) {
+      return {
+        message: 'NOT_FOUND_POINT_ASSIGNMENT_FOR_MSSV_OR_MSSV_NOT_MATCH',
+      };
+    }
     const find = await GradeViewCollection.findOne({
       Mssv: data.Mssv,
       classId: data.classId,
@@ -36,6 +45,7 @@ export class GradeViewController extends Controller {
   }
 
   @Post('/comment/{gradeViewId}')
+  @Security('oauth2')
   async commentGradeView(@Body() data: IComment, gradeViewId: string): Promise<IGradeViewResponse | any> {
     const find = await GradeViewCollection.findById(gradeViewId);
     if (!find) {
@@ -47,6 +57,7 @@ export class GradeViewController extends Controller {
   }
 
   @Get('/{classId}/class')
+  @Security('oauth2')
   async listGradeView(classId: string): Promise<IGradeViewResponse[]> {
     const data: IGradeViewResponse[] = await GradeViewCollection.find({
       classId,
@@ -55,6 +66,7 @@ export class GradeViewController extends Controller {
   }
 
   @Post('/update-mark')
+  @Security('oauth2')
   async updateMarkGradeView(@Body() data: IUpdateMarkRequest): Promise<{ message: string }> {
     const find = await GradeViewCollection.findById(data.gradeViewId);
     if (!find) {
