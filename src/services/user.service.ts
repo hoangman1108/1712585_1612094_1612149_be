@@ -38,7 +38,7 @@ export default class UserService {
         };
       }
     }
-    const user: IUserResponse | null = await UserCollection.findByIdAndUpdate(data.id, data);
+    const user: IUserResponse | null = await UserCollection.findByIdAndUpdate(data.id, data, { new: true });
     if (!user) {
       throw new ApiError(httpStatus.NOT_FOUND, 'USER_NOT_FOUND');
     }

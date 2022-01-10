@@ -10,6 +10,7 @@ export enum StatusEnum {
   ACTIVE = 'active',
   UNACTIVE = 'unactive',
   LOCKED = 'locked',
+  BANNED = 'banned',
 }
 export interface UserAttributes extends Document {
   id: string;
@@ -78,7 +79,7 @@ export const userSchema = new Schema({
   },
   status: {
     type: String,
-    status: [StatusEnum.ACTIVE, StatusEnum.UNACTIVE, StatusEnum.LOCKED],
+    status: [StatusEnum.ACTIVE, StatusEnum.UNACTIVE, StatusEnum.LOCKED, StatusEnum.BANNED],
     default: StatusEnum.UNACTIVE,
     nullable: true,
   },

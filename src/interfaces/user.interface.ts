@@ -42,6 +42,7 @@ export interface IUserUpdateRequest {
   mssv?: string;
   role?: string;
   phone?: string;
+  status?: any;
 }
 
 export interface IUserResponse {
