@@ -113,13 +113,15 @@ export default class AuthService {
   }
 
   async register(data: IUserRequest): Promise<any> {
-    // const checkMssv = await UserCollection.findOne({
-    //   mssv: data.mssv,
-    // });
-    // if (checkMssv) {
-    //   throw new ApiError(httpStatus.FOUND, 'MSSV_IS_EXISTS');
-    // }
-    const user: IUserResponse | null = await UserCollection.create(data);
+    const newData: any = { ...data };
+    if (data?.google) {
+      newData.status = 'active';
+    }
+    const findGmail = await UserCollection.findOne({ email: data.email }).lean();
+    if (findGmail) {
+      throw new ApiError(httpStatus.FOUND, 'EMAIL_IS_EXISTS');
+    }
+    const user: IUserResponse | null = await UserCollection.create(newData);
     if (!user) {
       throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, 'USER_CREATE_ERROR');
     }

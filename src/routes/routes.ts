@@ -1241,6 +1241,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/v1/grade-view',
+            authenticateMiddleware([{"oauth2":[]}]),
             function (request: any, response: any, next: any) {
             const args = {
                     data: {"in":"body","name":"data","required":true,"ref":"IGradeViewRequest"},
@@ -1268,6 +1269,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/v1/grade-view/comment/:gradeViewId',
+            authenticateMiddleware([{"oauth2":[]}]),
             function (request: any, response: any, next: any) {
             const args = {
                     data: {"in":"body","name":"data","required":true,"ref":"IComment"},
@@ -1296,6 +1298,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/v1/grade-view/:classId/class',
+            authenticateMiddleware([{"oauth2":[]}]),
             function (request: any, response: any, next: any) {
             const args = {
                     classId: {"in":"path","name":"classId","required":true,"dataType":"string"},
@@ -1323,6 +1326,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/v1/grade-view/update-mark',
+            authenticateMiddleware([{"oauth2":[]}]),
             function (request: any, response: any, next: any) {
             const args = {
                     data: {"in":"body","name":"data","required":true,"ref":"IUpdateMarkRequest"},

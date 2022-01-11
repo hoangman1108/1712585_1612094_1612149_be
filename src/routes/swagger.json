@@ -1907,7 +1907,11 @@
 				"tags": [
 					"Grade Views"
 				],
-				"security": [],
+				"security": [
+					{
+						"oauth2": []
+					}
+				],
 				"parameters": [],
 				"requestBody": {
 					"required": true,
@@ -1944,7 +1948,11 @@
 				"tags": [
 					"Grade Views"
 				],
-				"security": [],
+				"security": [
+					{
+						"oauth2": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -1988,7 +1996,11 @@
 				"tags": [
 					"Grade Views"
 				],
-				"security": [],
+				"security": [
+					{
+						"oauth2": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
@@ -2027,7 +2039,11 @@
 				"tags": [
 					"Grade Views"
 				],
-				"security": [],
+				"security": [
+					{
+						"oauth2": []
+					}
+				],
 				"parameters": [],
 				"requestBody": {
 					"required": true,
