@@ -17,6 +17,7 @@ export interface IMail {
 
 export enum EnumMail {
   NotiAllStudentAssignment = 'noti-all-student-assignment',
+  NewAssignment = 'new-assignment',
   BaSicContentCenter = 'basic-content-center',
   BasicContentLeft = 'basic-content-left',
   ActiveAccount = 'active-account',

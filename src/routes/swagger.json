@@ -420,6 +420,7 @@
 			"EnumMail": {
 				"enum": [
 					"noti-all-student-assignment",
+					"new-assignment",
 					"basic-content-center",
 					"basic-content-left",
 					"active-account",

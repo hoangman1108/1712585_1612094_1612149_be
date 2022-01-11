@@ -50,7 +50,6 @@ export class AssignmentController extends Controller {
         assignmentId: assignment?._id,
         point: { $exists: true },
       }).lean();
-      console.log('findPointAssignment: ', findPointAssignment);
       const { list }: any = await StudentCollection.findOne({ classId: data.classId });
       if (findPointAssignment.length !== list?.length) {
         return 'NEED_FILL_SCORE_FOR_ALL_STUDENT_BEFORE_MARK_DONE';
@@ -93,6 +92,17 @@ export class AssignmentController extends Controller {
   @Post('/')
   @Security('oauth2')
   public async createAssignment(@Request() request: any, @Body() data: IAssignmentCreateRequest): Promise<IAssignmentResponse> {
+    const { students }: any = await ClassCollection.findOne({ _id: data.classId }).populate('students');
+    await Promise.all(students?.map((student: any) => this.emailService.sendEmail(student.email, {
+      subject: 'New Assignment',
+      title: 'New Assignment',
+      body: 'body',
+      type: EnumMail.NewAssignment,
+      info: {
+        name: student.name,
+        nameAssignment: data.name,
+      } as any,
+    })));
     return this.assignmentService.create({
       ...data,
       teacherId: request.user.userId,
